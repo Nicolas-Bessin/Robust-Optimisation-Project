@@ -1,6 +1,6 @@
 
 struct Data
-    n :: Int # Number of vertices
+    N :: Int # Number of vertices
     K :: Int # Number of partition
 
     # Length-related data
@@ -118,6 +118,6 @@ function parse_file(filename :: String) :: Data
 
 end
 
-data = parse_file("data/202_gr_3.tsp")
+# data = parse_file("data/202_gr_3.tsp")
 
-data.l_hat
+# data.l_hat
