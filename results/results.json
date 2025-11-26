@@ -1,0 +1,18 @@
+{
+    "data/202_gr_3.tsp" : {
+        "static" : {
+            "time" : 1000,
+            "gap" : 0.0,
+            "status" : "OPTIMAL",
+            "cost" : 1e6
+        },
+        "cutting_planes" : {
+            "time" : 2000,
+            "gap" : 0.1,
+            "status" : "OPTIMAL",
+            "cost" : 1e6
+        }
+    
+    }
+
+}
