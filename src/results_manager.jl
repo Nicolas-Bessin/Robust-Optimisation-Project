@@ -86,19 +86,19 @@ function compile_raw_results(
     end
 
     open(output_res_file, "w") do f
-        content = JSON.json(output, pretty = true)
+        content = JSON.json(output, pretty = true, allownan = true)
         write(f, content)
     end
 
     return
 end
 
-RUN_SCRIPTING = false
+RUN_SCRIPTING = true
 if RUN_SCRIPTING
     compile_raw_results(
         "results/raw/",
-        "results/test.json",
-        [Symbol("time")],
+        "results/static_dual_5sec.json",
+        [Symbol("gap")],
         descending = false
     )
 end

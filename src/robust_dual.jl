@@ -3,9 +3,12 @@ include("results_manager.jl")
 
 using JuMP, Gurobi
 
-function robustdual_problem(data :: Data)
+function robustdual_problem(data :: Data, timelimit :: Int = 600)
+    METHOD = "robust_dual"
 
     model = Model(Gurobi.Optimizer)
+    set_time_limit_sec(model, timelimit)
+    set_silent(model)
 
     N = data.N
     K = data.K
@@ -39,11 +42,24 @@ function robustdual_problem(data :: Data)
 
     optimize!(model)
 
-    @assert is_solved_and_feasible(model)
-
     status = string(termination_status(model))
-    gap = relative_gap(model)
     solving_time = solve_time(model)
+
+    if !is_solved_and_feasible(model)
+        sol = SolutionInfo(
+            data.instance_name,
+            METHOD,
+            Inf,
+            solving_time,
+            status,
+            Inf,
+            [[]]
+        )
+        write_solution_info_to_raw_file(sol)
+        return
+    end
+
+    gap = relative_gap(model)
     cost = objective_value(model)
 
     x_val = value.(x)
@@ -64,7 +80,7 @@ function robustdual_problem(data :: Data)
 
     sol = SolutionInfo(
         data.instance_name,
-        "robust_dual",
+        METHOD,
         gap,
         solving_time,
         status,
@@ -78,4 +94,4 @@ end
 
 data = parse_file("data/10_ulysses_3.tsp");
 
-@time robustdual_problem(data)
+@time robustdual_problem(data);

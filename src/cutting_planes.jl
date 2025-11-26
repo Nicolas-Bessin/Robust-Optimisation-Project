@@ -41,7 +41,9 @@ function separation_weights(model_SPW, y, k :: Int, data :: Data)
 end
 
 
-function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 = 1e-6)
+function cutting_planes_method(data :: Data, timelimit :: Int = 600, eps :: Float64 = 1e-6)
+    METHOD = "cutting_planes"
+
     t0 = time()
     N = data.N
     K = data.K
@@ -95,7 +97,7 @@ function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 =
     iter = 0
     cutting_planes_count = 0
 
-    while !optimality_reached && iter < ITMAX
+    while !optimality_reached && time() - t0 < timelimit
         # Re-optimize model
         optimize!(model)
         @assert is_solved_and_feasible(model)
@@ -116,6 +118,7 @@ function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 =
             cutting_planes_count += 1
         end
         # 2) Weight separation
+        # Parallelisation ?
         for k in 1:K
             val, delta2 = separation_weights(models_SPW[k], y_val, k, data)
             if val > data.B
@@ -128,13 +131,32 @@ function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 =
                 cutting_planes_count += K
             end
         end
+        
+        iter += 1
     end
 
     status = string(termination_status(model))
-    gap = relative_gap(model)
     # We can't simply measure resolution time of the master problem
-    # solving_time = solve_time(model) + solve_time(model_SPL) + sum(solve_time(model_SPW_k) for model_SPW_k in models_SPW)
+    # solving_time = solve_time(model) + solve_time(model_SPL) 
+    #    + sum(solve_time(model_SPW_k) for model_SPW_k in models_SPW) # Innacurate due to all the non-solving stuff
     solving_time = time() - t0 # Innacurate on first run due to compilation :(
+
+    if !is_solved_and_feasible(model)
+        sol = SolutionInfo(
+            data.instance_name,
+            METHOD,
+            Inf,
+            solving_time,
+            status,
+            Inf,
+            [[]]
+        )
+        write_solution_info_to_raw_file(sol)
+        return
+    end
+
+    # WARNING : does not mean anything if cutting plane method didn't finish, because primal solution is thus not admissible
+    gap = relative_gap(model) 
     cost = objective_value(model)
 
     x_val = value.(x)
@@ -156,7 +178,7 @@ function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 =
 
     sol = SolutionInfo(
         data.instance_name,
-        "cutting_planes",
+        METHOD,
         gap,
         solving_time,
         status,
@@ -169,4 +191,4 @@ end
 
 data = parse_file("data/10_ulysses_3.tsp");
 
-@time cutting_planes_method(data)
+@time cutting_planes_method(data);

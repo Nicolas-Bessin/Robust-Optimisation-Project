@@ -87,7 +87,6 @@ function parse_file(filepath :: String) :: Data
             if length(entries) == 1
                 continue
             end
-            println(entries)
             @assert length(entries) == 3 # Two entries + ';' (or ']')
             x = parse(Float64, entries[1])
             y = parse(Float64, entries[2])
