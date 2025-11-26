@@ -1,0 +1,28 @@
+{
+  "10_ulysses_3.tsp": {
+    "static": {
+      "cost": 54.35482358772117,
+      "time": 0.04253387451171875,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "fe9fae7",
+      "date": "2025-11-26 19:21:48"
+    },
+    "cutting_planes": {
+      "cost": 136.99527629589417,
+      "time": 0.5262141227722168,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "fe9fae7",
+      "date": "2025-11-26 19:21:17"
+    },
+    "robust_dual": {
+      "cost": 136.99527629589417,
+      "time": 0.14428281784057617,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "fe9fae7",
+      "date": "2025-11-26 19:21:32"
+    }
+  }
+}
