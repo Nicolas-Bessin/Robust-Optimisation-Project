@@ -5,18 +5,10 @@ using JuMP, Gurobi
 """
 Solve the separation problem on length with the current values of x
 """
-function separation_length(x, data :: Data)
+function separation_length(model_SPL, x, data :: Data)
     N = data.N
 
-    model_SPL = Model(Gurobi.Optimizer)
-    set_silent(model_SPL)
-
-    @variable(model_SPL, 0 <= delta1[i = 1:N, j = i+1:N] <= data.delta_1_max)
-
-    @constraint(model_SPL, 
-        sum(delta1[i, j] for i in 1:N, j in i+1:N) <= data.L
-    )
-
+    delta1 = model_SPL[:delta1]
     @objective(model_SPL, Max,
         sum( delta1[i, j] * x[i, j] * (data.l_hat[i] + data.l_hat[j]) for i in 1:N, j in i+1:N )
     )
@@ -31,19 +23,10 @@ end
 """
 Solve the separation problem on length with the current values of y for partition k
 """
-function separation_weights(y, k :: Int, data :: Data)
+function separation_weights(model_SPW, y, k :: Int, data :: Data)
     N = data.N
 
-    model_SPW = Model(Gurobi.Optimizer)
-    set_silent(model_SPW)
-
-    @variable(model_SPW, 0 <= delta2[i = 1:N] <= data.delta_2_max[i])
-
-    # @constraint(model_SPW, [i = 1:N], 0 <= delta2[i] <= data.delta_2_max[i])
-    @constraint(model_SPW, 
-        sum(delta2[i] for i in 1:N) <= data.W
-    )
-
+    delta2 = model_SPW[:delta2]
     @objective(model_SPW, Max,
         sum( (1 + delta2[i]) * y[i, k] * data.weights[i] for i in 1:N )
     )
@@ -82,8 +65,33 @@ function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 =
         sum(x[i,j] * data.edge_lengths[i,j] for i in 1:N, j in i+1:N) + z
     )
 
+    # Prepare the separation problems 
+    model_SPL = Model(Gurobi.Optimizer)
+    set_silent(model_SPL)
+
+    @variable(model_SPL, 0 <= delta1[i = 1:N, j = i+1:N] <= data.delta_1_max)
+
+    @constraint(model_SPL, 
+        sum(delta1[i, j] for i in 1:N, j in i+1:N) <= data.L
+    )
+
+    models_SPW :: Vector{JuMP.GenericModel{Core.Float64}} = []
+    for k in 1:K
+        model_SPW_k = Model(Gurobi.Optimizer)
+        set_silent(model_SPW_k)
+
+        @variable(model_SPW_k, 0 <= delta2[i = 1:N] <= data.delta_2_max[i])
+
+        # @constraint(model_SPW, [i = 1:N], 0 <= delta2[i] <= data.delta_2_max[i])
+        @constraint(model_SPW_k, 
+            sum(delta2[i] for i in 1:N) <= data.W
+        )
+        push!(models_SPW, model_SPW_k)
+    end
+
     optimality_reached = false
     iter = 0
+    cutting_planes_count = 0
 
     while !optimality_reached && iter < ITMAX
         # Re-optimize model
@@ -95,7 +103,7 @@ function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 =
 
         # Solve both separation problems, update optimality and add the cuts
         # 1) Length separation
-        val, delta1 = separation_length(x_val, data)
+        val, delta1 = separation_length(model_SPL, x_val, data)
         if val > value.(z) + eps 
             optimality_reached = false
             # Add the length cut
@@ -103,10 +111,11 @@ function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 =
             @constraint(model, 
                 sum(x[i, j] * delta1[i, j] * (data.l_hat[i] + data.l_hat[j]) for i in 1:N, j in i+1:N) <= z
             )
+            cutting_planes_count += 1
         end
         # 2) Weight separation
         for k in 1:K
-            val, delta2 = separation_weights(y_val, k, data)
+            val, delta2 = separation_weights(models_SPW[k], y_val, k, data)
             if val > data.B
                 optimality_reached = false
                 # Add the weight cut for all values of k !
@@ -114,6 +123,7 @@ function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 =
                 @constraint(model, [k = 1:K],
                     sum( (1 + delta2[i]) * y[i, k] * data.weights[i] for i in 1:N) <= data.B
                 )
+                cutting_planes_count += K
             end
         end
     end
@@ -133,8 +143,9 @@ function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 =
     partitions = filter(p -> !isempty(p), partitions)
     println("Partition is $partitions")
     println("Objective value is $(objective_value(model))")
+    println("Added a total of $cutting_planes_count cutting planes")
 end
 
 data = parse_file("data/10_ulysses_3.tsp");
 
-cutting_planes_method(data)
+@time cutting_planes_method(data)

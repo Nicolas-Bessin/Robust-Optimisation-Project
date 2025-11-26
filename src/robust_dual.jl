@@ -57,6 +57,6 @@ function robustdual_problem(data :: Data)
 
 end
 
-data = parse_file("data/10_ulysses_3.tsp")
+data = parse_file("data/10_ulysses_3.tsp");
 
-robustdual_problem(data)
+@time robustdual_problem(data)
