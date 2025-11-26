@@ -1,4 +1,5 @@
 include("instance.jl")
+include("results_manager.jl")
 
 using JuMP, Gurobi
 
@@ -30,6 +31,11 @@ function static_problem(data :: Data)
 
     @assert is_solved_and_feasible(model)
 
+    status = string(termination_status(model))
+    gap = relative_gap(model)
+    solving_time = solve_time(model)
+    cost = objective_value(model)
+
     x_val = value.(x)
     y_val = value.(y)
 
@@ -45,6 +51,17 @@ function static_problem(data :: Data)
     partitions = filter(p -> !isempty(p), partitions)
     println("Partition is $partitions")
 
+    sol = SolutionInfo(
+        data.instance_name,
+        "static",
+        gap,
+        solving_time,
+        status,
+        cost,
+        partitions
+    )
+
+    write_solution_info_to_raw_file(sol)
 end
 
 data = parse_file("data/10_ulysses_3.tsp")

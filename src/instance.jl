@@ -1,5 +1,9 @@
 
 struct Data
+    # Metadata
+    instance_name :: String
+
+    # Size
     N :: Int # Number of vertices
     K :: Int # Number of partition
 
@@ -18,7 +22,9 @@ struct Data
 end
 
 
-function parse_file(filename :: String) :: Data
+
+
+function parse_file(filepath :: String) :: Data
     current_section = nothing
 
     # Data
@@ -35,7 +41,7 @@ function parse_file(filename :: String) :: Data
     W = 0.
     delta_2_max :: Vector{Float64} = []
 
-    lines = readlines(filename)
+    lines = readlines(filepath)
 
     for line in lines
         line_data = nothing
@@ -104,6 +110,7 @@ function parse_file(filename :: String) :: Data
     end
 
     return Data(
+        basename(filepath),
         n,
         K,
         edge_lengths,

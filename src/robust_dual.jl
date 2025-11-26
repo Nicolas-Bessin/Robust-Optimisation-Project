@@ -1,4 +1,5 @@
 include("instance.jl")
+include("results_manager.jl")
 
 using JuMP, Gurobi
 
@@ -40,6 +41,11 @@ function robustdual_problem(data :: Data)
 
     @assert is_solved_and_feasible(model)
 
+    status = string(termination_status(model))
+    gap = relative_gap(model)
+    solving_time = solve_time(model)
+    cost = objective_value(model)
+
     x_val = value.(x)
     y_val = value.(y)
 
@@ -52,8 +58,21 @@ function robustdual_problem(data :: Data)
         push!(partitions[k], i)
     end
 
-    partitions = filter(p -> !isempty(p), partitions)
+    filter!(p -> !isempty(p), partitions)
     println("Partition is $partitions")
+    println("With a cost of $cost")
+
+    sol = SolutionInfo(
+        data.instance_name,
+        "robust_dual",
+        gap,
+        solving_time,
+        status,
+        cost,
+        partitions
+    )
+
+    write_solution_info_to_raw_file(sol)
 
 end
 

@@ -1,4 +1,5 @@
 include("instance.jl")
+include("results_manager.jl")
 
 using JuMP, Gurobi
 
@@ -41,6 +42,7 @@ end
 
 
 function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 = 1e-6)
+    t0 = time()
     N = data.N
     K = data.K
 
@@ -128,6 +130,13 @@ function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 =
         end
     end
 
+    status = string(termination_status(model))
+    gap = relative_gap(model)
+    # We can't simply measure resolution time of the master problem
+    # solving_time = solve_time(model) + solve_time(model_SPL) + sum(solve_time(model_SPW_k) for model_SPW_k in models_SPW)
+    solving_time = time() - t0 # Innacurate on first run due to compilation :(
+    cost = objective_value(model)
+
     x_val = value.(x)
     y_val = value.(y)
 
@@ -144,6 +153,18 @@ function cutting_planes_method(data :: Data, ITMAX :: Int = 10, eps :: Float64 =
     println("Partition is $partitions")
     println("Objective value is $(objective_value(model))")
     println("Added a total of $cutting_planes_count cutting planes")
+
+    sol = SolutionInfo(
+        data.instance_name,
+        "cutting_planes",
+        gap,
+        solving_time,
+        status,
+        cost,
+        partitions
+    )
+
+    write_solution_info_to_raw_file(sol)
 end
 
 data = parse_file("data/10_ulysses_3.tsp");
