@@ -592,6 +592,14 @@
       "commit-id": "7dbbe50",
       "date": "2025-11-26 19:56:12"
     },
+    "cutting_planes": {
+      "cost": 93.38998725996821,
+      "time": 2.954481840133667,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "9ceb9b8",
+      "date": "2025-12-09 14:53:20"
+    },
     "robust_dual": {
       "cost": 93.38998725996821,
       "time": 0.2757298946380615,
@@ -753,6 +761,14 @@
       "gap": 0.0,
       "commit-id": "7dbbe50",
       "date": "2025-11-26 19:56:11"
+    },
+    "cutting_planes": {
+      "cost": 55.11939124322688,
+      "time": 0.46071410179138184,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "9ceb9b8",
+      "date": "2025-12-09 14:46:40"
     },
     "robust_dual": {
       "cost": 55.11939124322688,
