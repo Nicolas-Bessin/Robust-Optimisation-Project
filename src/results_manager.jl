@@ -93,7 +93,7 @@ function compile_raw_results(
     return
 end
 
-RUN_SCRIPTING = true
+RUN_SCRIPTING = false
 if RUN_SCRIPTING
     compile_raw_results(
         "results/raw/",

@@ -1,5 +1,6 @@
 include("instance.jl")
 include("results_manager.jl")
+include("utils.jl")
 include("cutting_planes_separation.jl")
 
 using JuMP, Gurobi
@@ -143,17 +144,8 @@ function cutting_planes_method(data :: Data, timelimit :: Int = 600, eps :: Floa
 
     x_val = value.(x)
     y_val = value.(y)
-
-    # Re-build the partitions in a printable way
-    partitions :: Vector{Vector{Int}} = repeat([[]], K)
-    # println(length(partitions))
-    for i in 1:N
-        k = findfirst(y -> y == 1, y_val[i, :])
-        # println("Vertex $i is in partition $k")
-        push!(partitions[k], i)
-    end
-
-    partitions = filter(p -> !isempty(p), partitions)
+    partitions = rebuild_partition(y_val, data)
+    
     println("Partition is $partitions")
     println("Objective value is $(objective_value(model))")
     println("Added a total of $cutting_planes_length length related cutting planes")
@@ -178,6 +170,6 @@ function cutting_planes_method(data :: Data, timelimit :: Int = 600, eps :: Floa
     write_solution_info_to_raw_file(sol)
 end
 
-data = parse_file("data/14_burma_3.tsp");
+data = parse_file("data/22_ulysses_3.tsp");
 
-@time cutting_planes_method(data, 5);
+@time cutting_planes_method(data, 300);

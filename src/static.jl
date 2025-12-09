@@ -1,5 +1,6 @@
 include("instance.jl")
 include("results_manager.jl")
+include("utils.jl")
 
 using JuMP, Gurobi
 
@@ -54,17 +55,8 @@ function static_problem(data :: Data, timelimit :: Int = 600)
 
     x_val = value.(x)
     y_val = value.(y)
+    partitions = rebuild_partition(y_val, data)
 
-    # Re-build the partitions in a printable way
-    partitions :: Vector{Vector{Int}} = repeat([[]], K)
-    # println(length(partitions))
-    for i in 1:N
-        k = findfirst(y -> y == 1, y_val[i, :])
-        # println("Vertex $i is in partition $k")
-        push!(partitions[k], i)
-    end
-
-    partitions = filter(p -> !isempty(p), partitions)
     println("Partition is $partitions")
 
     sol = SolutionInfo(
