@@ -37,6 +37,20 @@ function robustdual_problem(data :: Data, timelimit :: Int = 600)
         t[k] + xi[i,k] >= y[i,k] * data.weights[i]
     )
 
+    # Breaking symetries
+
+    # First method : imposing the biggest partition to be first 
+    # @constraint(model, [k = 1:(K-1)],
+    #     sum(y[i, k] for i ∈ 1:N) >= sum(y[i, k+1] for i ∈ 1:N)
+    # )
+    # Res (22_ulysses_3.tsp): Absolutely horrible : 4s to solve without, 24s to solve with
+   
+    # Second method : Imposing the first vertex to be in partition 1
+    # @constraint(model, y[N, 1] == 1)
+    # Res (22_ulysses_3.tsp) : Seems to make it slightly faster, from ~4s to ~3.6s
+    # However : if we impose the last vertex to be in the first partition : ~4s -> ~6s
+    
+
     @objective(model, Min,
         data.L * z + sum(x[i,j] * data.edge_lengths[i,j] + 3*eta[i,j] for i in 1:N, j in i+1:N)
     )
@@ -57,7 +71,7 @@ function robustdual_problem(data :: Data, timelimit :: Int = 600)
             [[]]
         )
         write_solution_info_to_raw_file(sol)
-        return
+        return status
     end
 
     gap = relative_gap(model)
@@ -82,8 +96,5 @@ function robustdual_problem(data :: Data, timelimit :: Int = 600)
 
     write_solution_info_to_raw_file(sol)
 
+    return status
 end
-
-data = parse_file("data/22_ulysses_3.tsp");
-
-@time robustdual_problem(data);

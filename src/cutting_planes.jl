@@ -135,7 +135,7 @@ function cutting_planes_method(data :: Data, timelimit :: Int = 600, eps :: Floa
             [[]]
         )
         write_solution_info_to_raw_file(sol)
-        return
+        return status
     end
 
     # WARNING : does not mean anything if cutting plane method didn't finish, because primal solution is thus not admissible
@@ -168,8 +168,6 @@ function cutting_planes_method(data :: Data, timelimit :: Int = 600, eps :: Floa
     )
 
     write_solution_info_to_raw_file(sol)
+
+    return status
 end
-
-data = parse_file("data/22_ulysses_3.tsp");
-
-@time cutting_planes_method(data, 300);

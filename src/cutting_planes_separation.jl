@@ -1,5 +1,7 @@
 include("instance.jl")
 
+using JuMP
+
 """
 Create the initial length separation problem model - without the objective
 """

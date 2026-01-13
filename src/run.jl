@@ -1,40 +1,80 @@
 include("cutting_planes.jl")
+include("cutting_planes_callbacks.jl")
 include("robust_dual.jl")
 include("static.jl")
-
 
 """
 Methods : 1 for static, 2 for cutting planes, 3 for robust via dualization, ...
 """
 function run_all_instances(
-    instance_folder :: String,
-    timelimit :: Int64,
-    methods :: Vector{Int} = [1, 2, 3]
+    instances_dir :: String,
+    timelimit :: Int,
+    methods :: Vector{Int} = [1, 3, 4]
 )
+    instances_name = readdir(instances_dir)
+    # The solution.txt file is not an instance
+    deleteat!(instances_name, findfirst(x -> x == "solution.txt", instances_name))
+    all_instances = ["$instances_dir/$name" for name in instances_name]
+    run_list_of_instances(
+        all_instances,
+        timelimit,
+        methods
+    )
+end
 
-    for instance in readdir(instance_folder)
+"""
+Methods : 1 for static, 2 for cutting planes, 3 for robust via dualization, ...
+"""
+function run_list_of_instances(
+    instances_list :: Vector{String},
+    timelimit :: Int64,
+    methods :: Vector{Int} = [1, 2, 3],
+    stop_at_first_failure :: Bool = true
+)
+    if stop_at_first_failure
+        @assert length(methods) == 1 "When stopping at a failure, only compute for 1 method at a time"
+    end
+
+    OPT = string(MOI.OPTIMAL)
+    # Sort the instances by increasing size xxx (filepaths are 'data/xxx_name_part.tsp')
+    filesizes = [parse(Int, split(basename(x), "_")[1]) for x in instances_list]
+    perm = sortperm(filesizes)
+    println(instances_list[perm])
+    println("------------")
+
+    for filepath in instances_list[perm]
         println("--------------")
-        println("Running instance $instance")
-        filepath = "$instance_folder/$instance"
+        println("Running instance $filepath")
         data = parse_file(filepath)
 
         if 1 in methods
             println("----- Static -----")
-            static_problem(data, timelimit)
+            status = static_problem(data, timelimit)
         end
         
         if 2 in methods
             println("----- Cutting Planes -----")
-            cutting_planes_method(data, timelimit)
+            status = cutting_planes_method(data, timelimit)
+
         end
 
         if 3 in methods 
             println("----- Dualization -----")
-            robustdual_problem(data, timelimit)
+            status = robustdual_problem(data, timelimit)
+        end
+        
+        if 4 in methods 
+            println("----- Cutting Planes - Lazy Callback -----")
+            status = cutting_planes_with_callbacks(data, timelimit)
+        end
+
+        if status != OPT && stop_at_first_failure
+            print("Status is $status, expected $OPT")
+            break
         end
 
     end
     
 end
 
-run_all_instances("data/", 5, [1, 3])
+run_all_instances("data", 300, [1])

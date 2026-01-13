@@ -42,7 +42,8 @@ function compile_raw_results(
     output_res_file :: String,
     criteria :: Vector{Symbol};
     descending :: Bool = false,
-    instance_folder :: String = "data/"
+    instance_folder :: String = "data/",
+    methods_to_compile :: Union{Vector{String}, String} = "all"
 )
     
     output = Dict()
@@ -67,6 +68,15 @@ function compile_raw_results(
         # Process every method
         for method_file in readdir(instance_raw_results)
             method = splitext(method_file)[1]
+
+            # Only compile certain methods
+            if methods_to_compile != "all"
+                @assert typeof(methods_to_compile) == Vector{String}
+                if method ∉ methods_to_compile
+                    continue
+                end
+            end
+            
             filepath = "$instance_raw_results/$method_file"
             method_data = CSV.read(filepath, DataFrame, header = true)
             sort!(method_data, criteria, rev = descending)
@@ -93,12 +103,13 @@ function compile_raw_results(
     return
 end
 
-RUN_SCRIPTING = false
+RUN_SCRIPTING = true
 if RUN_SCRIPTING
     compile_raw_results(
         "results/raw/",
-        "results/static_dual_5sec.json",
-        [Symbol("gap")],
-        descending = false
+        "results/static_5sec.json",
+        [Symbol("date")],
+        descending = true,
+        methods_to_compile = ["static"]
     )
 end

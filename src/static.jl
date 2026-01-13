@@ -47,7 +47,7 @@ function static_problem(data :: Data, timelimit :: Int = 600)
             [[]]
         )
         write_solution_info_to_raw_file(sol)
-        return
+        return status
     end
 
     gap = relative_gap(model)
@@ -70,8 +70,6 @@ function static_problem(data :: Data, timelimit :: Int = 600)
     )
 
     write_solution_info_to_raw_file(sol)
+
+    return status
 end
-
-data = parse_file("data/10_ulysses_3.tsp");
-
-@time static_problem(data);

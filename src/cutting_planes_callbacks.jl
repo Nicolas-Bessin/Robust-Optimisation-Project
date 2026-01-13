@@ -58,7 +58,7 @@ function cutting_planes_with_callbacks(data :: Data, timelimit :: Int = 600, eps
         for k in 1:K
             val, delta2 = separation_weights(model_SPW, y_val, k, data)
             if val > data.B
-                # println("Adding a weight cut")
+                # println("Adding a weight cut")             
                 for kprime in 1:K
                     wcut = @build_constraint(
                         sum( (1 + delta2[i]) * y[i, kprime] * data.weights[i] for i in 1:N) <= data.B
@@ -80,6 +80,12 @@ function cutting_planes_with_callbacks(data :: Data, timelimit :: Int = 600, eps
     status = string(termination_status(model))
     solving_time = time() - t0 # Innacurate on first run due to compilation :(
     println("Status is $status")
+    # Time info
+    separation_percentage = trunc(100 * total_time_separation / solving_time, digits = 3)
+    println("Time spent in the callback function : $(trunc(total_time_separation, digits = 3)) ($separation_percentage %)")
+    # Cutting planes info
+    println("Added a total of $cutting_planes_length length related cutting planes")
+    println("Added a total of $cutting_planes_weight weight related cutting planes")
 
     if !is_solved_and_feasible(model)
         sol = SolutionInfo(
@@ -92,7 +98,7 @@ function cutting_planes_with_callbacks(data :: Data, timelimit :: Int = 600, eps
             [[]]
         )
         write_solution_info_to_raw_file(sol)
-        return
+        return status
     end
 
     # WARNING : does not mean anything if cutting plane method didn't finish, because primal solution is thus not admissible
@@ -105,11 +111,6 @@ function cutting_planes_with_callbacks(data :: Data, timelimit :: Int = 600, eps
 
     println("Partition is $partitions")
     println("Objective value is $(objective_value(model))")
-    println("Added a total of $cutting_planes_length length related cutting planes")
-    println("Added a total of $cutting_planes_weight weight related cutting planes")
-    # Time info
-    separation_percentage = trunc(100 * total_time_separation / solving_time, digits = 3)
-    println("Time spent in the callback function : $(trunc(total_time_separation, digits = 3)) ($separation_percentage %)")
 
     sol = SolutionInfo(
         data.instance_name,
@@ -122,8 +123,6 @@ function cutting_planes_with_callbacks(data :: Data, timelimit :: Int = 600, eps
     )
 
     write_solution_info_to_raw_file(sol)
+
+    return status
 end
-
-data = parse_file("data/22_ulysses_3.tsp");
-
-@time cutting_planes_with_callbacks(data, 300);
