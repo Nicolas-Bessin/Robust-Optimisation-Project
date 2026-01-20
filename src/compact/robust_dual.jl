@@ -67,12 +67,12 @@ function robustdual_problem(
         println("Setting the initial solution of the problem")
 
         @assert typeof(initial_sol) == Vector{Vector{Int}}
-        @assert length(initial_sol) <= instance.k "Solution has to many partitions for the current instance"
+        @assert length(initial_sol) <= data.K "Solution has to many partitions for the current instance"
 
         for (k, cluster) in enumerate(initial_sol)
             # Starting x values
             for i in cluster
-                for j in cluser 
+                for j in cluster 
                     if j > i 
                         set_start_value(x[i, j], 1)
                     end
@@ -128,3 +128,8 @@ function robustdual_problem(
 
     return status
 end
+
+
+# data = parse_file("data/22_ulysses_6.tsp");
+# @time robustdual_problem(data)
+# @time robustdual_problem(data, initial_sol = greedy_init(data))

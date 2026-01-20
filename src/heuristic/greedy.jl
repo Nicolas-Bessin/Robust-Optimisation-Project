@@ -16,7 +16,7 @@ end
 """
 function greedy_init(
     instance :: Data
-)
+) :: Vector{Vector{Int}}
     N = instance.N
     K = instance.K
 
@@ -72,8 +72,9 @@ function greedy_init(
     println("Budget is $(instance.B), worst case scenario budget usage by partition is :")
     println(used_budget_by_cluster)
     
+    return partition
 end
 
 
-data = parse_file("data/22_ulysses_6.tsp");
-greedy_init(data)
+# data = parse_file("data/22_ulysses_6.tsp");
+# greedy_init(data)

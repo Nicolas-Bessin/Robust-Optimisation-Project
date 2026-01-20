@@ -19,3 +19,23 @@ function rebuild_partition(yval, data :: Data)
 
     return partitions
 end
+
+"""
+Compute the static cost of a cluster
+"""
+function cluster_static_cost(
+    cluster :: Vector{Int},
+    data :: Data
+)
+    cost = 0.0
+
+    for i in cluster
+        for j in cluster
+            if i >j
+                cost += data.edge_lengths[i, j]
+            end
+        end
+    end
+
+    return cost
+end
