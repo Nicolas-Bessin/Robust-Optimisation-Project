@@ -1,7 +1,7 @@
-include("cutting_planes.jl")
-include("cutting_planes_callbacks.jl")
-include("robust_dual.jl")
-include("static.jl")
+include("cutting_planes/cutting_planes.jl")
+include("cutting_planes/cutting_planes_callbacks.jl")
+include("compact/robust_dual.jl")
+include("compact/static.jl")
 
 """
 Methods : 1 for static, 2 for cutting planes, 3 for robust via dualization, ...
@@ -77,4 +77,4 @@ function run_list_of_instances(
     
 end
 
-run_all_instances("data", 300, [1])
+# run_all_instances("data", 300, [1])

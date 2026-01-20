@@ -1,4 +1,4 @@
-include("instance.jl")
+include("../data/instance.jl")
 
 using JuMP
 

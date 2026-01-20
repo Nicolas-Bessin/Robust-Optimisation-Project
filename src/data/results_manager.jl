@@ -103,13 +103,13 @@ function compile_raw_results(
     return
 end
 
-RUN_SCRIPTING = true
-if RUN_SCRIPTING
-    compile_raw_results(
-        "results/raw/",
-        "results/static_5sec.json",
-        [Symbol("date")],
-        descending = true,
-        methods_to_compile = ["static"]
-    )
-end
+
+# Run the following to compile raw results to a json file
+#########################
+# compile_raw_results(
+#     "results/raw/",
+#     "results/static_5sec.json",
+#     [Symbol("date")],
+#     descending = true,
+#     methods_to_compile = ["static"]
+# )

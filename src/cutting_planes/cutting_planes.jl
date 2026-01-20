@@ -1,6 +1,7 @@
-include("instance.jl")
-include("results_manager.jl")
-include("utils.jl")
+include("../data/instance.jl")
+include("../data/results_manager.jl")
+include("../data/utils.jl")
+
 include("cutting_planes_separation.jl")
 
 using JuMP, Gurobi
