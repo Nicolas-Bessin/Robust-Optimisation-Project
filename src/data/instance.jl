@@ -19,6 +19,8 @@ struct Data
     W :: Int # Maximum cumulative relative increase on weights
     delta_2_max :: Vector{Float64} # Maximum delta_2 per vertex
 
+    # Position data (only used for heuristics)
+    coordinates :: Vector{Tuple{Float64, Float64}}
 end
 
 
@@ -119,7 +121,8 @@ function parse_file(filepath :: String) :: Data
         weights,
         B,
         W,
-        delta_2_max
+        delta_2_max,
+        coords
     )
 
 end

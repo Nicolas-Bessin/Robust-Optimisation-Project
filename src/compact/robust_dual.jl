@@ -2,9 +2,16 @@ include("../data/instance.jl")
 include("../data/results_manager.jl")
 include("../data/utils.jl")
 
+include("../heuristic/greedy.jl")
+
 using JuMP, Gurobi
 
-function robustdual_problem(data :: Data, timelimit :: Int = 600)
+function robustdual_problem(
+    data :: Data,
+    timelimit :: Int = 600;
+    initial_sol = nothing
+    )
+
     METHOD = "robust_dual"
 
     model = Model(Gurobi.Optimizer)
@@ -54,6 +61,29 @@ function robustdual_problem(data :: Data, timelimit :: Int = 600)
     @objective(model, Min,
         data.L * z + sum(x[i,j] * data.edge_lengths[i,j] + 3*eta[i,j] for i in 1:N, j in i+1:N)
     )
+
+    # Adding the initial solution
+    if !isnothing(initial_sol)
+        println("Setting the initial solution of the problem")
+
+        @assert typeof(initial_sol) == Vector{Vector{Int}}
+        @assert length(initial_sol) <= instance.k "Solution has to many partitions for the current instance"
+
+        for (k, cluster) in enumerate(initial_sol)
+            # Starting x values
+            for i in cluster
+                for j in cluser 
+                    if j > i 
+                        set_start_value(x[i, j], 1)
+                    end
+                end
+            end
+            # Starting y values
+            for i in cluster
+                set_start_value(y[i, k], 1)
+            end
+        end
+    end
 
     optimize!(model)
 
