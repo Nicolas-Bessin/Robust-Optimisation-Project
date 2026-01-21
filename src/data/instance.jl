@@ -126,7 +126,3 @@ function parse_file(filepath :: String) :: Data
     )
 
 end
-
-# data = parse_file("data/202_gr_3.tsp")
-
-# data.l_hat

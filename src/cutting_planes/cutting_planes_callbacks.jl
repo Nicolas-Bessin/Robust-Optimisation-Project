@@ -9,16 +9,16 @@ using JuMP, Gurobi
 
 
 
-function cutting_planes_with_callbacks(data :: Data, timelimit :: Int = 600, eps :: Float64 = 1e-6)
-    N = data.N
-    K = data.K
+function cutting_planes_with_callbacks(instance :: Data, timelimit :: Int = 600, eps :: Float64 = 1e-6)
+    N = instance.N
+    K = instance.K
 
     gurobi_env = Gurobi.Env()
     METHOD = "cutting_planes_callbacks"
 
     t0 = time()
     
-    model = cutting_planes_initial_model(data, gurobi_env)
+    model = cutting_planes_initial_model(instance, gurobi_env)
     set_time_limit_sec(model, timelimit)
 
     x = model[:x]
@@ -26,45 +26,45 @@ function cutting_planes_with_callbacks(data :: Data, timelimit :: Int = 600, eps
     z = model[:z]
 
     # Prepare the separation problems 
-    model_SPL = cutting_planes_length_separation_model(data, gurobi_env)
-    model_SPW = cutting_planes_weights_separation_model(data, gurobi_env)
+    model_SPL = cutting_planes_length_separation_model(instance, gurobi_env)
+    model_SPW = cutting_planes_weights_separation_model(instance, gurobi_env)
 
     cutting_planes_length = 0
     cutting_planes_weight = 0
     total_time_separation = 0.
 
-    function lazy_cuts(cb_data)
+    function lazy_cuts(cb_instance)
         t0sep = time()
-        status = callback_node_status(cb_data, model)
+        status = callback_node_status(cb_instance, model)
         if status == MOI.CALLBACK_NODE_STATUS_FRACTIONAL
             return
         end
-        x_val = callback_value.(cb_data, x)
-        y_val = callback_value.(cb_data, y)
-        z_val = callback_value(cb_data, z)
+        x_val = callback_value.(cb_instance, x)
+        y_val = callback_value.(cb_instance, y)
+        z_val = callback_value(cb_instance, z)
 
         # Length-related cutting planes 
-        val, delta1 = separation_length(model_SPL, x_val, data)
+        val, delta1 = separation_length(model_SPL, x_val, instance)
         if val > z_val + eps 
             # Build the length cut
             # println("Adding a length cut")
             lcut = @build_constraint( 
-                sum(x[i, j] * delta1[i, j] * (data.l_hat[i] + data.l_hat[j]) for i in 1:N, j in i+1:N) <= z
+                sum(x[i, j] * delta1[i, j] * (instance.l_hat[i] + instance.l_hat[j]) for i in 1:N, j in i+1:N) <= z
             )
-            MOI.submit(model, MOI.LazyConstraint(cb_data), lcut)
+            MOI.submit(model, MOI.LazyConstraint(cb_instance), lcut)
             cutting_planes_length += 1
         end
 
         # Weight related cutting planes
         for k in 1:K
-            val, delta2 = separation_weights(model_SPW, y_val, k, data)
-            if val > data.B
+            val, delta2 = separation_weights(model_SPW, y_val, k, instance)
+            if val > instance.B
                 # println("Adding a weight cut")             
                 for kprime in 1:K
                     wcut = @build_constraint(
-                        sum( (1 + delta2[i]) * y[i, kprime] * data.weights[i] for i in 1:N) <= data.B
+                        sum( (1 + delta2[i]) * y[i, kprime] * instance.weights[i] for i in 1:N) <= instance.B
                     )
-                    MOI.submit(model, MOI.LazyConstraint(cb_data), wcut)
+                    MOI.submit(model, MOI.LazyConstraint(cb_instance), wcut)
                 end
                 cutting_planes_weight += K
             end
@@ -90,7 +90,7 @@ function cutting_planes_with_callbacks(data :: Data, timelimit :: Int = 600, eps
 
     if !is_solved_and_feasible(model)
         sol = SolutionInfo(
-            data.instance_name,
+            instance.instance_name,
             METHOD,
             Inf,
             solving_time,
@@ -108,13 +108,13 @@ function cutting_planes_with_callbacks(data :: Data, timelimit :: Int = 600, eps
 
     x_val = value.(x)
     y_val = value.(y)
-    partitions = rebuild_partition(y_val, data)
+    partitions = rebuild_partition(y_val, instance)
 
     println("Partition is $partitions")
     println("Objective value is $(objective_value(model))")
 
     sol = SolutionInfo(
-        data.instance_name,
+        instance.instance_name,
         METHOD,
         gap,
         solving_time,

@@ -5,21 +5,21 @@ include("../heuristic/greedy.jl")
 include("../data/results_manager.jl")
 
 function CG_solver_non_compact(
-    data :: Data;
+    instance :: Data;
     find_integer_sol :: Bool = true,
     timelimit :: Int = 600,
-    itermax :: Int = 100,
+    itermax :: Int = 1000,
     eps = 1e-6
 )
     total_master_time = 0.0
     total_pricing_time = 0.0
 
-    initial_sol = greedy_init(data, verbose = true)
+    initial_sol = greedy_init(instance, verbose = true)
     available_partitions = deepcopy(initial_sol)
 
-    master_model = master_problem(data, initial_sol)
+    master_model = master_problem(instance, initial_sol)
     set_silent(master_model)
-    pricing_model = pricing_model_quadratic(data)
+    pricing_model = pricing_model_quadratic(instance)
     set_silent(pricing_model)
 
     # Retrieving references to the variables & constraints
@@ -50,13 +50,13 @@ function CG_solver_non_compact(
         lambda = dual.(cover)
         mu = dual.(rdist)
 
-        rc, clust = find_best_candidate_quadratic(data, pricing_model, lambda, mu)
+        rc, clust = find_best_candidate_quadratic(instance, pricing_model, lambda, mu)
 
         println("Found a candidate with reduced cost of $(rc - theta)")
         # Note that the pricing is implemented as a min problem (to go with the master_model which is also a min problem)
         # So the reduced cost differs a little from the problem described in the Overleaf
         if rc - theta < -eps
-            add_cluster_to_master(data, master_model, clust)
+            add_cluster_to_master(instance, master_model, clust)
             push!(available_partitions, clust)
         else 
             stop = true
@@ -86,7 +86,7 @@ function CG_solver_non_compact(
     integer_obj = objective_value(master_model)
 
     gap_estimation = (integer_obj - lower_bound_obj) / lower_bound_obj
-    status = string(termination_status(master_model))
+    status = gap_estimation < esp ? string(MOI.OPTIMAL) : "UNKNOWN"
     z_val = value.(z)
 
     solution = [clust for (p, clust) in enumerate(available_partitions) if z_val[p] > 1 - eps]
@@ -99,7 +99,7 @@ function CG_solver_non_compact(
     println("Total solving time : $(total_integer_time + total_pricing_time + total_master_time)")
 
     solution = SolutionInfo(
-        data.instance_name,
+        instance.instance_name,
         "CG-NC",
         gap_estimation,
         total_master_time + total_pricing_time,
@@ -110,8 +110,10 @@ function CG_solver_non_compact(
 
     write_solution_info_to_raw_file(solution)
 
+    return status
+
 end
 
-data = parse_file("data/22_ulysses_6.tsp");
+instance = parse_file("instance/40_eil_3.tsp");
 
-@time CG_solver_non_compact(data)
+@time CG_solver_non_compact(instance)

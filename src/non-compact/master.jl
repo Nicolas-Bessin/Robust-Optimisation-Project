@@ -15,7 +15,7 @@ function master_problem(
     K = instance.K
 
     static_costs = [
-        cluster_static_cost(clust, data) for clust in initial_sol
+        cluster_static_cost(clust, instance) for clust in initial_sol
     ]
     n_parts =  length(initial_sol)
 
@@ -47,15 +47,6 @@ function master_problem(
 
     return model
 end
-
-
-# include("../heuristic/greedy.jl")
-# data = parse_file("data/22_ulysses_6.tsp");
-
-# master_problem(
-#     data,
-#     greedy_init(data)
-# )
 
 """
 Modifies the given master problem to add a nex cluster to the list of available clusters
@@ -91,7 +82,7 @@ function add_cluster_to_master(
     end
 
     # Objective
-    set_objective_coefficient(master, z[var_index], cluster_static_cost(cluster, data))
+    set_objective_coefficient(master, z[var_index], cluster_static_cost(cluster, instance))
 
     return
 end

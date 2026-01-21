@@ -2,6 +2,7 @@ include("cutting_planes/cutting_planes.jl")
 include("cutting_planes/cutting_planes_callbacks.jl")
 include("compact/robust_dual.jl")
 include("compact/static.jl")
+include("non-compact/column_generation.jl")
 
 """
 Methods : 1 for static, 2 for cutting planes, 3 for robust via dualization, ...
@@ -28,7 +29,7 @@ Methods : 1 for static, 2 for cutting planes, 3 for robust via dualization, ...
 function run_list_of_instances(
     instances_list :: Vector{String},
     timelimit :: Int64,
-    methods :: Vector{Int} = [1, 2, 3],
+    methods :: Vector{Int} = [1, 3, 4],
     stop_at_first_failure :: Bool = true
 )
     if stop_at_first_failure
@@ -36,7 +37,7 @@ function run_list_of_instances(
     end
 
     OPT = string(MOI.OPTIMAL)
-    # Sort the instances by increasing size xxx (filepaths are 'data/xxx_name_part.tsp')
+    # Sort the instances by increasing size Nvertices (filenames are 'Nvertices_name_Kclust.tsp')
     filesizes = [parse(Int, split(basename(x), "_")[1]) for x in instances_list]
     perm = sortperm(filesizes)
     println(instances_list[perm])
@@ -45,27 +46,32 @@ function run_list_of_instances(
     for filepath in instances_list[perm]
         println("--------------")
         println("Running instance $filepath")
-        data = parse_file(filepath)
+        instance = parse_file(filepath)
 
         if 1 in methods
             println("----- Static -----")
-            status = static_problem(data, timelimit)
+            status = static_problem(instance, timelimit)
         end
         
         if 2 in methods
             println("----- Cutting Planes -----")
-            status = cutting_planes_method(data, timelimit)
+            status = cutting_planes_method(instance, timelimit)
 
         end
 
         if 3 in methods 
             println("----- Dualization -----")
-            status = robustdual_problem(data, timelimit)
+            status = robustdual_problem(instance, timelimit)
         end
         
         if 4 in methods 
             println("----- Cutting Planes - Lazy Callback -----")
-            status = cutting_planes_with_callbacks(data, timelimit)
+            status = cutting_planes_with_callbacks(instance, timelimit)
+        end
+
+        if 5 in methods
+            println("----- Non Compact by CG -----")
+            status = CG_solver_non_compact(instance, timelimit = timelimit)
         end
 
         if status != OPT && stop_at_first_failure
