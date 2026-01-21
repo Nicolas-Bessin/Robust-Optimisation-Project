@@ -2,7 +2,7 @@ include("../data/instance.jl")
 
 using JuMP, Gurobi
 
-function pricing_quadratic_model(
+function pricing_model_quadratic(
     instance :: Data
 )
     N = data.N
@@ -36,8 +36,8 @@ function find_best_candidate_quadratic(
     x = pricing_model[:x]
 
     @objective(pricing_model, Min,
-        sum(x[i] * lambda[i] for i ∈ 1:N) 
-            - sum(
+        - sum(x[i] * lambda[i] for i ∈ 1:N) 
+            + sum(
                 x[i] * x[j] * (instance.edge_lengths[i, j] + mu[i, j] * (instance.l_hat[i] + instance.l_hat[j])) for i in 1:N, j in i+1:N
                 )
     )
@@ -50,7 +50,9 @@ function find_best_candidate_quadratic(
     x_val = value.(x)
     cluster = [i for i ∈ 1:N if x_val[i] > 1 - eps]
 
-    return cluster
+    reduced_cost = objective_value(pricing_model)
+
+    return reduced_cost, cluster
 end
 
 # data = parse_file("data/22_ulysses_6.tsp");

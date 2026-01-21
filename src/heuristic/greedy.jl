@@ -1,4 +1,5 @@
 include("../data/instance.jl")
+include("../data/utils.jl")
 
 using Clustering
 
@@ -15,7 +16,8 @@ end
  - We know how to ensure the robust budget constraint : distribute the uncertainty in priority to the highest static weight nodes
 """
 function greedy_init(
-    instance :: Data
+    instance :: Data;
+    verbose :: Bool = false
 ) :: Vector{Vector{Int}}
     N = instance.N
     K = instance.K
@@ -26,13 +28,12 @@ function greedy_init(
     centers = [Tuple(col) for col in eachcol(clusters.centers)]
 
     # Initialize the cluster
-    partition = [[] for k in 1:K]
+    partition = [Int[] for k in 1:K]
     used_budget_by_cluster = zeros(K)
     remaining_uncertainy_by_cluster = instance.W * ones(K)
 
     # Sort the nodes by weights
     perm = sortperm(1:N, by = i -> instance.weights[i], rev = true)
-    println(perm)
 
     for node in perm
 
@@ -67,10 +68,19 @@ function greedy_init(
 
     end
 
-    println("Partition is :")
-    println(partition)
-    println("Budget is $(instance.B), worst case scenario budget usage by partition is :")
-    println(used_budget_by_cluster)
+    if verbose
+        # Computing the cost
+        cost = 0.0
+        for clust in partition
+            cost += cluster_static_cost(clust, instance)
+        end
+
+        println("Partition is :")
+        println(partition)
+        println("Budget is $(instance.B), worst case scenario budget usage by partition is :")
+        println(used_budget_by_cluster)
+        println("Total cost is : $cost")
+    end
     
     return partition
 end

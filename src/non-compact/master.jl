@@ -14,11 +14,10 @@ function master_problem(
     N = instance.N
     K = instance.K
 
-    available_partitions = deepcopy(initial_sol)
-    available_partitions_static_costs = [
-        cluster_static_cost(clust, data) for clust in available_partitions
+    static_costs = [
+        cluster_static_cost(clust, data) for clust in initial_sol
     ]
-    n_parts =  length(available_partitions)
+    n_parts =  length(initial_sol)
 
     println("Initializing the master problem with $n_parts clusters")
 
@@ -30,19 +29,20 @@ function master_problem(
     @variable(model, beta[i = 1:N, j = i+1:N] >= 0)
 
     # Number of clusters we can use
-    @constraint(model, sum(z) <= K)
+    @constraint(model, used_clusters, sum(z) <= K)
     # Covering all vertices
-    @constraint(model, [i = 1:N], 
-        sum(z[p] for p in 1:n_parts if i ∈ available_partitions[p]) >= 1
+    @constraint(model, cover[i = 1:N], 
+        sum(z[p] for p in 1:n_parts if i ∈ initial_sol[p]) >= 1
         )
     # Robust distances
-    @constraint(model, [i = 1:N, j = i+1:N],
-        alpha + beta[i, j] >= (instance.l_hat[i] + instance.l_hat[j]) * 
-            sum(z[p] for p in 1:n_parts if (i ∈ available_partitions[p] && j ∈ available_partitions[p]) )
+    @constraint(model, rdist[i = 1:N, j = i+1:N],
+        alpha + beta[i, j] - (instance.l_hat[i] + instance.l_hat[j]) * 
+            sum(z[p] for p in 1:n_parts if (i ∈ initial_sol[p] && j ∈ initial_sol[p]) )
+            >= 0
     )
 
     @objective(model, Min, 
-        instance.L * alpha + instance.delta_1_max * sum(beta) + sum(z[p] * available_partitions_static_costs[p] for p in 1:n_parts)
+        instance.L * alpha + instance.delta_1_max * sum(beta) + sum(z[p] * static_costs[p] for p in 1:n_parts)
     )
 
     return model
@@ -56,3 +56,42 @@ end
 #     data,
 #     greedy_init(data)
 # )
+
+"""
+Modifies the given master problem to add a nex cluster to the list of available clusters
+"""
+function add_cluster_to_master(
+    instance :: Data,
+    master :: JuMP.GenericModel{Float64},
+    cluster :: Vector{Int}
+)
+    N = instance.N
+
+    # Create the new variable
+    z = master[:z]
+    var_index = length(z) + 1
+    push!(z, @variable(master, lower_bound = 0, upper_bound = 1, base_name = "z"))
+
+    # Set the objective & constraint coefficients of this variable
+    used_clusters = master[:used_clusters]
+    cover = master[:cover]
+    rdist = master[:rdist]
+
+    # Constraints
+    set_normalized_coefficient(used_clusters, z[var_index], 1)
+    for i in cluster
+        set_normalized_coefficient(cover[i], z[var_index], 1)
+        for j in cluster
+            if j > i
+                set_normalized_coefficient(rdist[i, j], z[var_index],
+                    -instance.l_hat[i] - instance.l_hat[j]
+                )
+            end
+        end
+    end
+
+    # Objective
+    set_objective_coefficient(master, z[var_index], cluster_static_cost(cluster, data))
+
+    return
+end
