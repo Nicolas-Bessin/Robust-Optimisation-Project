@@ -98,7 +98,7 @@ function CG_solver_non_compact(
     println("Master : $total_master_time, Pricing : $total_pricing_time, Integer : $total_integer_time")
     println("Total solving time : $(total_integer_time + total_pricing_time + total_master_time)")
 
-    solution = SolutionInfo(
+    solution_info = SolutionInfo(
         data.instance_name,
         "CG-NC",
         gap_estimation,
@@ -108,10 +108,14 @@ function CG_solver_non_compact(
         solution
     )
 
-    write_solution_info_to_raw_file(solution)
+    write_solution_info_to_raw_file(solution_info)
 
+    return solution_info
 end
 
-data = parse_file("data/22_ulysses_6.tsp");
+# data = parse_file("data/22_ulysses_6.tsp");
 
-@time CG_solver_non_compact(data)
+# @time sol_info = CG_solver_non_compact(data)
+
+# check_feasability(data, sol_info.solution)
+# compute_robust_cost(data, sol_info.solution)
