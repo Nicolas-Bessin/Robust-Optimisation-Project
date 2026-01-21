@@ -84,7 +84,3 @@ function greedy_init(
     
     return partition
 end
-
-
-# data = parse_file("data/22_ulysses_6.tsp");
-# greedy_init(data)

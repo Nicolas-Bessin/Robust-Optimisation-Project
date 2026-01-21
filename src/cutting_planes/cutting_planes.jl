@@ -10,9 +10,9 @@ using JuMP, Gurobi
 """ 
 Creates the initial master problem of the cutting planes formulation
 """
-function cutting_planes_initial_model(data :: Data, gurobi_env)
-    N = data.N
-    K = data.K
+function cutting_planes_initial_model(instance :: Data, gurobi_env)
+    N = instance.N
+    K = instance.K
 
     model = Model(() -> Gurobi.Optimizer(gurobi_env))
     set_attribute(model, "Method", 1)
@@ -29,33 +29,33 @@ function cutting_planes_initial_model(data :: Data, gurobi_env)
         sum(y[i,k] for k in 1:K) == 1
     )
     @constraint(model, [k in 1:K],
-        sum(y[i,k] * data.weights[i] for i in 1:N) <= data.B
+        sum(y[i,k] * instance.weights[i] for i in 1:N) <= instance.B
     )
 
     @objective(model, Min,
-        sum(x[i,j] * data.edge_lengths[i,j] for i in 1:N, j in i+1:N) + z
+        sum(x[i,j] * instance.edge_lengths[i,j] for i in 1:N, j in i+1:N) + z
     )
 
     return model
 end
 
-function cutting_planes_method(data :: Data, timelimit :: Int = 600, eps :: Float64 = 1e-6)
-    N = data.N
-    K = data.K
+function cutting_planes_method(instance :: Data, timelimit :: Int = 600, eps :: Float64 = 1e-6)
+    N = instance.N
+    K = instance.K
 
     gurobi_env = Gurobi.Env()
     METHOD = "cutting_planes"
 
     t0 = time()
     
-    model = cutting_planes_initial_model(data, gurobi_env)
+    model = cutting_planes_initial_model(instance, gurobi_env)
     x = model[:x]
     y = model[:y]
     z = model[:z]
 
     # Prepare the separation problems 
-    model_SPL = cutting_planes_length_separation_model(data, gurobi_env)
-    model_SPW = cutting_planes_weights_separation_model(data, gurobi_env)
+    model_SPL = cutting_planes_length_separation_model(instance, gurobi_env)
+    model_SPW = cutting_planes_weights_separation_model(instance, gurobi_env)
 
     optimality_reached = false
     iter = 0
@@ -85,13 +85,13 @@ function cutting_planes_method(data :: Data, timelimit :: Int = 600, eps :: Floa
             optimality_reached = false
             break
         end
-        val, delta1 = separation_length(model_SPL, x_val, data, remaining)
+        val, delta1 = separation_length(model_SPL, x_val, instance, remaining)
         if val > value.(z) + eps 
             optimality_reached = false
             # Add the length cut
             # println("Adding a length cut")
             @constraint(model, 
-                sum(x[i, j] * delta1[i, j] * (data.l_hat[i] + data.l_hat[j]) for i in 1:N, j in i+1:N) <= z
+                sum(x[i, j] * delta1[i, j] * (instance.l_hat[i] + instance.l_hat[j]) for i in 1:N, j in i+1:N) <= z
             )
             cutting_planes_length += 1
         end
@@ -102,13 +102,13 @@ function cutting_planes_method(data :: Data, timelimit :: Int = 600, eps :: Floa
             if remaining < 1
                 break
             end
-            val, delta2 = separation_weights(model_SPW, y_val, k, data, remaining)
-            if val > data.B
+            val, delta2 = separation_weights(model_SPW, y_val, k, instance, remaining)
+            if val > instance.B
                 optimality_reached = false
                 # Add the weight cut for all values of k !
                 # println("Adding a weight cut")
                 @constraint(model, [k = 1:K],
-                    sum( (1 + delta2[i]) * y[i, k] * data.weights[i] for i in 1:N) <= data.B
+                    sum( (1 + delta2[i]) * y[i, k] * instance.weights[i] for i in 1:N) <= instance.B
                 )
                 cutting_planes_weight += K
             end
@@ -127,7 +127,7 @@ function cutting_planes_method(data :: Data, timelimit :: Int = 600, eps :: Floa
 
     if !is_solved_and_feasible(model)
         sol = SolutionInfo(
-            data.instance_name,
+            instance.instance_name,
             METHOD,
             Inf,
             solving_time,
@@ -145,7 +145,7 @@ function cutting_planes_method(data :: Data, timelimit :: Int = 600, eps :: Floa
 
     x_val = value.(x)
     y_val = value.(y)
-    partitions = rebuild_partition(y_val, data)
+    partitions = rebuild_partition(y_val, instance)
     
     println("Partition is $partitions")
     println("Objective value is $(objective_value(model))")
@@ -159,7 +159,7 @@ function cutting_planes_method(data :: Data, timelimit :: Int = 600, eps :: Floa
     println("Time spent solving separation problem : $(trunc(total_time_separation, digits = 3)) ($separation_percentage %)")
 
     sol = SolutionInfo(
-        data.instance_name,
+        instance.instance_name,
         METHOD,
         gap,
         solving_time,

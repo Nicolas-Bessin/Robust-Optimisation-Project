@@ -4,15 +4,15 @@ include("../data/utils.jl")
 
 using JuMP, Gurobi
 
-function static_problem(data :: Data, timelimit :: Int = 600)
+function static_problem(instance :: Data, timelimit :: Int = 600)
     METHOD = "static"
 
     model = Model(Gurobi.Optimizer)
     set_time_limit_sec(model, timelimit)
     set_silent(model)
 
-    N = data.N
-    K = data.K
+    N = instance.N
+    K = instance.K
 
     @variable(model, x[i = 1:N, j = 1:N], Bin)
     @variable(model, y[i = 1:N, k = 1:K], Bin)
@@ -24,11 +24,11 @@ function static_problem(data :: Data, timelimit :: Int = 600)
         sum(y[i,k] for k in 1:K) == 1
     )
     @constraint(model, [k in 1:K],
-        sum(y[i,k] * data.weights[i] for i in 1:N) <= data.B
+        sum(y[i,k] * instance.weights[i] for i in 1:N) <= instance.B
     )
 
     @objective(model, Min,
-        sum(x[i,j] * data.edge_lengths[i,j] for i in 1:N, j in i+1:N)
+        sum(x[i,j] * instance.edge_lengths[i,j] for i in 1:N, j in i+1:N)
     )
 
     optimize!(model)
@@ -38,7 +38,7 @@ function static_problem(data :: Data, timelimit :: Int = 600)
 
     if !is_solved_and_feasible(model)
         sol = SolutionInfo(
-            data.instance_name,
+            instance.instance_name,
             METHOD,
             Inf,
             solving_time,
@@ -55,12 +55,12 @@ function static_problem(data :: Data, timelimit :: Int = 600)
 
     x_val = value.(x)
     y_val = value.(y)
-    partitions = rebuild_partition(y_val, data)
+    partitions = rebuild_partition(y_val, instance)
 
     println("Partition is $partitions")
 
     sol = SolutionInfo(
-        data.instance_name,
+        instance.instance_name,
         METHOD,
         gap,
         solving_time,

@@ -7,7 +7,7 @@ include("../heuristic/greedy.jl")
 using JuMP, Gurobi
 
 function robustdual_problem(
-    data :: Data,
+    instance :: Data,
     timelimit :: Int = 600;
     initial_sol = nothing
     )
@@ -18,8 +18,8 @@ function robustdual_problem(
     set_time_limit_sec(model, timelimit)
     set_silent(model)
 
-    N = data.N
-    K = data.K
+    N = instance.N
+    K = instance.K
 
     @variable(model, x[i = 1:N, j = i+1:N], Bin)
     @variable(model, y[i = 1:N, k = 1:K], Bin)
@@ -35,13 +35,13 @@ function robustdual_problem(
         sum(y[i,k] for k in 1:K) == 1
     )
     @constraint(model, [i = 1:N, j = i+1:N],
-        z + eta[i,j] >= x[i,j]*(data.l_hat[i] + data.l_hat[j])
+        z + eta[i,j] >= x[i,j]*(instance.l_hat[i] + instance.l_hat[j])
     )
     @constraint(model, [k = 1:K],
-        data.W*t[k] + sum(y[i,k] * data.weights[i] + xi[i,k]*data.delta_2_max[i] for i in 1:N) <= data.B
+        instance.W*t[k] + sum(y[i,k] * instance.weights[i] + xi[i,k]*instance.delta_2_max[i] for i in 1:N) <= instance.B
     )
     @constraint(model, [i = 1:N, k = 1:K],
-        t[k] + xi[i,k] >= y[i,k] * data.weights[i]
+        t[k] + xi[i,k] >= y[i,k] * instance.weights[i]
     )
 
     # Breaking symetries
@@ -59,7 +59,7 @@ function robustdual_problem(
     
 
     @objective(model, Min,
-        data.L * z + sum(x[i,j] * data.edge_lengths[i,j] + 3*eta[i,j] for i in 1:N, j in i+1:N)
+        instance.L * z + sum(x[i,j] * instance.edge_lengths[i,j] + 3*eta[i,j] for i in 1:N, j in i+1:N)
     )
 
     # Adding the initial solution
@@ -67,7 +67,7 @@ function robustdual_problem(
         println("Setting the initial solution of the problem")
 
         @assert typeof(initial_sol) == Vector{Vector{Int}}
-        @assert length(initial_sol) <= data.K "Solution has to many partitions for the current instance"
+        @assert length(initial_sol) <= instance.K "Solution has to many partitions for the current instance"
 
         for (k, cluster) in enumerate(initial_sol)
             # Starting x values
@@ -92,7 +92,7 @@ function robustdual_problem(
 
     if !is_solved_and_feasible(model)
         sol = SolutionInfo(
-            data.instance_name,
+            instance.instance_name,
             METHOD,
             Inf,
             solving_time,
@@ -109,13 +109,13 @@ function robustdual_problem(
 
     x_val = value.(x)
     y_val = value.(y)
-    partitions = rebuild_partition(y_val, data)
+    partitions = rebuild_partition(y_val, instance)
 
     println("Partition is $partitions")
     println("With a cost of $cost")
 
     sol = SolutionInfo(
-        data.instance_name,
+        instance.instance_name,
         METHOD,
         gap,
         solving_time,
@@ -130,6 +130,6 @@ function robustdual_problem(
 end
 
 
-# data = parse_file("data/22_ulysses_6.tsp");
-# @time robustdual_problem(data)
-# @time robustdual_problem(data, initial_sol = greedy_init(data))
+# instance = parse_file("instance/22_ulysses_6.tsp");
+# @time robustdual_problem(instance)
+# @time robustdual_problem(instance, initial_sol = greedy_init(instance))

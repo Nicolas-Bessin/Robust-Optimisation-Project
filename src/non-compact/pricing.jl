@@ -1,11 +1,11 @@
-include("../data/instance.jl")
+include("../instance/instance.jl")
 
 using JuMP, Gurobi
 
 function pricing_model_quadratic(
     instance :: Data
 )
-    N = data.N
+    N = instance.N
     
     model = Model(Gurobi.Optimizer)
     set_silent(model)
@@ -31,7 +31,7 @@ function find_best_candidate_quadratic(
     mu;
     eps = 1e-6
 )
-    N = data.N
+    N = instance.N
 
     x = pricing_model[:x]
 
@@ -54,12 +54,3 @@ function find_best_candidate_quadratic(
 
     return reduced_cost, cluster
 end
-
-# data = parse_file("data/22_ulysses_6.tsp");
-# pricing_model = pricing_quadratic_model(data);
-# find_best_candidate_quadratic(
-#     data,
-#     pricing_model,
-#     zeros(data.N),
-#     zeros((data.N, data.N))
-# )
