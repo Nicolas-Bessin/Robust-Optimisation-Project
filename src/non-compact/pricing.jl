@@ -1,4 +1,4 @@
-include("../instance/instance.jl")
+include("../data/instance.jl")
 
 using JuMP, Gurobi
 
