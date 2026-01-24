@@ -86,7 +86,7 @@ function CG_solver_non_compact(
     integer_obj = objective_value(master_model)
 
     gap_estimation = (integer_obj - lower_bound_obj) / lower_bound_obj
-    status = gap_estimation < esp ? string(MOI.OPTIMAL) : "UNKNOWN"
+    status = gap_estimation < eps ? string(MOI.OPTIMAL) : "UNKNOWN"
     z_val = value.(z)
 
     solution = [clust for (p, clust) in enumerate(available_partitions) if z_val[p] > 1 - eps]
@@ -99,7 +99,7 @@ function CG_solver_non_compact(
     println("Total solving time : $(total_integer_time + total_pricing_time + total_master_time)")
 
     solution_info = SolutionInfo(
-        data.instance_name,
+        instance.instance_name,
         "CG-NC",
         gap_estimation,
         total_master_time + total_pricing_time,
