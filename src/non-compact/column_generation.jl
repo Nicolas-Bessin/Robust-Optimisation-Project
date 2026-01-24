@@ -110,7 +110,7 @@ function CG_solver_non_compact(
 
     write_solution_info_to_raw_file(solution_info)
 
-    return solution_info
+    return status
 end
 
 # data = parse_file("data/22_ulysses_6.tsp");
