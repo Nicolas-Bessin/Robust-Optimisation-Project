@@ -55,7 +55,10 @@ function static_problem(instance :: Data, timelimit :: Int = 600)
 
     x_val = value.(x)
     y_val = value.(y)
-    partitions = rebuild_partition(y_val, instance)
+    partitions, plt = rebuild_partition(y_val, instance)
+    title!(plt, "$(instance.instance_name)\nMethod: $METHOD")
+    savefig(plt, "results/maps/$(instance.instance_name)_$METHOD.png")
+    display(plt)
 
     println("Partition is $partitions")
 

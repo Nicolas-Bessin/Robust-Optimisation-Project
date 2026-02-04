@@ -145,7 +145,9 @@ function cutting_planes_method(instance :: Data, timelimit :: Int = 600, eps :: 
 
     x_val = value.(x)
     y_val = value.(y)
-    partitions = rebuild_partition(y_val, instance)
+    partitions, plt = rebuild_partition(y_val, instance)
+    title!(plt, "$(instance.instance_name)\nMethod: $METHOD")
+    savefig(plt, "results/maps/$(instance.instance_name)_$METHOD.png")
     
     println("Partition is $partitions")
     println("Objective value is $(objective_value(model))")

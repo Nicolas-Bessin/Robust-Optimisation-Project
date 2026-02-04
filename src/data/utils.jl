@@ -1,11 +1,28 @@
 include("instance.jl")
 
-using JuMP, Gurobi
+using JuMP, Gurobi, Plots
+
+function plot_instance(data :: Data)
+    les_x = Vector{Float64}()
+    les_y = Vector{Float64}()
+
+    for i in 1:data.N
+        x,y = data.coordinates[i]
+        push!(les_x,x)
+        push!(les_y,y)
+    end
+
+    plt = scatter(les_x,les_y, markersize = data.weights)
+    display(plt)
+
+    return plt
+end
+
 
 """
 Translate the resulting values of y to human-readable partition
 """
-function rebuild_partition(yval, instance :: Data) :: Vector{Vector{Int}}
+function rebuild_partition(yval, instance :: Data)
     N = instance.N
     K = instance.K
     # Re-build the partitions in a printable way
@@ -21,9 +38,25 @@ function rebuild_partition(yval, instance :: Data) :: Vector{Vector{Int}}
         push!(partitions[k], i)
     end
 
+    plt = scatter()
+    for p in 1:K
+
+        les_x = Vector{Float64}()
+        les_y = Vector{Float64}()
+        les_weights = Vector{Float64}()
+
+        for i in partitions[p]
+            x,y = instance.coordinates[i]
+            push!(les_x,x)
+            push!(les_y,y)
+            push!(les_weights,instance.weights[i])
+        end
+        scatter!(les_x,les_y, markersize = les_weights, label="Part $p")
+    end
+
     partitions = filter(p -> !isempty(p), partitions)
 
-    return partitions
+    return partitions, plt
 end
 
 """

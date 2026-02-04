@@ -50,6 +50,7 @@ function run_list_of_instances(
         println("--------------")
         println("Running instance $filepath")
         instance = parse_file(filepath)
+        plot_instance
 
         if 1 in methods
             println("----- Static -----")
@@ -86,4 +87,4 @@ function run_list_of_instances(
     
 end
 
-run_all_instances("data/", 600, [1], stop_at_first_failure = false)
+# run_all_instances("data/", 600, [1], stop_at_first_failure = false)
