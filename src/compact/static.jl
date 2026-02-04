@@ -59,6 +59,9 @@ function static_problem(instance :: Data, timelimit :: Int = 600)
 
     println("Partition is $partitions")
 
+    feas = check_feasability(instance, partitions, robust = false)
+    println("Feasibility : $feas")
+
     sol = SolutionInfo(
         instance.instance_name,
         METHOD,

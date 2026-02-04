@@ -5,15 +5,19 @@ using JuMP, Gurobi
 """
 Translate the resulting values of y to human-readable partition
 """
-function rebuild_partition(yval, instance :: Data)
+function rebuild_partition(yval, instance :: Data) :: Vector{Vector{Int}}
     N = instance.N
     K = instance.K
     # Re-build the partitions in a printable way
     partitions :: Vector{Vector{Int}} = repeat([[]], K)
     # println(length(partitions))
+    # println(yval)
     for i in 1:N
-        k = findfirst(y -> y == 1, yval[i, :])
-        # println("Vertex $i is in partition $k")
+        k = findfirst(val -> abs(val - 1) < 1e-6, yval[i, :])
+        if isnothing(k)
+            println("Error : vertex $i is not in a partition : we got k = $k")
+        end
+        # println("Vertex $i is in partition $k")
         push!(partitions[k], i)
     end
 
@@ -48,7 +52,8 @@ Checks the feasibility of a solution
 """
 function check_feasability(
     instance :: Data,
-    solution :: Vector{Vector{Int}}
+    solution :: Vector{Vector{Int}};
+    robust :: Bool = true
 )
 
     # Use the fact that we know what is the worst assignment of delta_2 for a given cluster
@@ -58,6 +63,9 @@ function check_feasability(
 
         cluster_cost = sum(instance.weights[cluster])
         available_uncert = instance.W
+        if !robust
+            available_uncert = 0
+        end
         idx = 1
         while idx <= ncluster && available_uncert > 0
             node = cluster[perm[idx]]
@@ -70,7 +78,7 @@ function check_feasability(
 
         if cluster_cost > instance.B
             println("INFEASIBILITY : Cluster $cluster ")
-            println("Worst case cost of $cluster_costwhile ; Budget is $(instance.B)")
+            println("Worst case cost of $cluster_cost ; Budget is $(instance.B)")
             return false
         end
     end

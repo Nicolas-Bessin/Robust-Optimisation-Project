@@ -1,0 +1,1022 @@
+{
+  "30_eil_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0060510635376,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:43:35"
+    },
+    "CG-NC": {
+      "cost": 713.971761421444,
+      "time": 7.796149730682373,
+      "status": "CG_REL_ENDED",
+      "gap": 0.09071368486652343,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:40:11"
+    }
+  },
+  "38_rat_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.00904297828674,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 12:10:47"
+    },
+    "CG-NC": {
+      "cost": 3879.3750433102864,
+      "time": 0.02155303955078125,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:27"
+    }
+  },
+  "400_rd_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.03002309799194,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 14:36:04"
+    }
+  },
+  "34_pr_3.tsp": {
+    "static": {
+      "cost": 493480.2457448918,
+      "time": 131.23138117790222,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:45:47"
+    },
+    "CG-NC": {
+      "cost": 1.1472591721102013e6,
+      "time": 605.8514399528503,
+      "status": "CG_REL_ENDED",
+      "gap": 0.9722891133409002,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:50:17"
+    }
+  },
+  "202_gr_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0524778366089,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 14:10:54"
+    }
+  },
+  "22_ulysses_3.tsp": {
+    "static": {
+      "cost": 284.20980668553614,
+      "time": 0.4174768924713135,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:24:39"
+    },
+    "CG-NC": {
+      "cost": 612.7803614740915,
+      "time": 21.038774728775024,
+      "status": "CG_REL_ENDED",
+      "gap": 0.7358161115808611,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:32:32"
+    },
+    "cutting_planes": {
+      "cost": 358.6368286225183,
+      "time": 10.372457027435303,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:01:16"
+    },
+    "robust_dual": {
+      "cost": 358.6368286225183,
+      "time": 1.9418189525604248,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:40:33"
+    }
+  },
+  "80_gr_3.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0066759586334,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 13:30:49"
+    }
+  },
+  "10_ulysses_9.tsp": {
+    "static": {
+      "cost": 0.7202777242147631,
+      "time": 0.006640911102294922,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:24:38"
+    },
+    "CG-NC": {
+      "cost": 33.29189782877749,
+      "time": 0.10908913612365723,
+      "status": "CG_REL_ENDED",
+      "gap": 3.333687689141264,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:32:09"
+    },
+    "cutting_planes": {
+      "cost": 33.29189782877749,
+      "time": 0.4942481517791748,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 11:59:59"
+    },
+    "cutting_planes_callbacks": {
+      "cost": 33.29189782877749,
+      "time": 0.25000786781311035,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:54:43"
+    },
+    "robust_dual": {
+      "cost": 33.29189782877749,
+      "time": 0.015854835510253906,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:40:30"
+    }
+  },
+  "48_att_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.01125597953796,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 12:55:48"
+    },
+    "CG-NC": {
+      "cost": 400341.9430575935,
+      "time": 0.15613532066345215,
+      "status": "OPTIMAL",
+      "gap": -1.4539486037588024e-16,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:28"
+    }
+  },
+  "48_att_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.04460096359253,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 12:50:48"
+    },
+    "CG-NC": {
+      "cost": 632298.2229772026,
+      "time": 0.02041792869567871,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:28"
+    }
+  },
+  "14_burma_9.tsp": {
+    "static": {
+      "cost": 4.724843955442653,
+      "time": 0.07566094398498535,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:24:38"
+    },
+    "CG-NC": {
+      "cost": 20.762438566071065,
+      "time": 0.3063547611236572,
+      "status": "CG_REL_ENDED",
+      "gap": 0.5979861268222212,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:32:11"
+    },
+    "cutting_planes": {
+      "cost": 20.762438566071065,
+      "time": 59.319387912750244,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:01:06"
+    },
+    "cutting_planes_callbacks": {
+      "cost": Infinity,
+      "time": 600.0385868549347,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:04:46"
+    },
+    "robust_dual": {
+      "cost": 20.762438566071065,
+      "time": 0.1992480754852295,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:40:31"
+    }
+  },
+  "52_berlin_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.009724855423,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 13:10:49"
+    }
+  },
+  "38_rat_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0449788570404,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 12:05:47"
+    },
+    "CG-NC": {
+      "cost": 5234.820934411004,
+      "time": 0.02191758155822754,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:27"
+    }
+  },
+  "532_att_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.1028971672058,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 14:56:22"
+    }
+  },
+  "52_berlin_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.00785398483276,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 13:05:49"
+    },
+    "CG-NC": {
+      "cost": 128666.85276340564,
+      "time": 0.018880367279052734,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:28"
+    }
+  },
+  "48_att_3.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0059540271759,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 12:45:48"
+    },
+    "CG-NC": {
+      "cost": 1.2478754503991199e6,
+      "time": 0.027753353118896484,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:28"
+    }
+  },
+  "40_eil_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.02924704551697,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 12:20:48"
+    },
+    "CG-NC": {
+      "cost": 3799.026927741462,
+      "time": 0.02050161361694336,
+      "status": "OPTIMAL",
+      "gap": 1.197010075305819e-16,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:27"
+    }
+  },
+  "318_lin_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.04124903678894,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 14:20:56"
+    }
+  },
+  "38_rat_3.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.00298404693604,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 12:00:47"
+    },
+    "CG-NC": {
+      "cost": 12346.987415569012,
+      "time": 0.2709238529205322,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:27"
+    }
+  },
+  "318_lin_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.11999702453613,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 14:25:59"
+    }
+  },
+  "70_st_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.01328706741333,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 13:25:49"
+    }
+  },
+  "40_eil_3.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0052897930145,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 12:15:47"
+    },
+    "CG-NC": {
+      "cost": 9433.922743266008,
+      "time": 621.8374559879303,
+      "status": "OPTIMAL",
+      "gap": 0.5212778884970246,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:46:10"
+    }
+  },
+  "40_eil_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.00279998779297,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 12:25:48"
+    },
+    "CG-NC": {
+      "cost": 2349.9369570429526,
+      "time": 0.026238441467285156,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:27"
+    }
+  },
+  "100_kroA_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0714268684387,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 13:55:50"
+    }
+  },
+  "14_burma_6.tsp": {
+    "static": {
+      "cost": 17.962247641471908,
+      "time": 0.11981582641601562,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:24:38"
+    },
+    "CG-NC": {
+      "cost": 42.74062354260174,
+      "time": 0.6573801040649414,
+      "status": "CG_REL_ENDED",
+      "gap": 0.13407182582178453,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:32:11"
+    },
+    "cutting_planes": {
+      "cost": 42.74062354260174,
+      "time": 6.390599966049194,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:00:06"
+    },
+    "cutting_planes_callbacks": {
+      "cost": 42.74062354260174,
+      "time": 2.4252240657806396,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:54:46"
+    },
+    "robust_dual": {
+      "cost": 42.74062354260174,
+      "time": 0.1731860637664795,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:40:31"
+    }
+  },
+  "30_eil_3.tsp": {
+    "static": {
+      "cost": 2693.0461171791962,
+      "time": 114.92005205154419,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:33:35"
+    },
+    "CG-NC": {
+      "cost": 3021.110276255874,
+      "time": 283.6611530780792,
+      "status": "CG_REL_ENDED",
+      "gap": 0.006355427056133514,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:39:38"
+    }
+  },
+  "318_lin_3.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0931718349457,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 14:15:55"
+    }
+  },
+  "26_eil_9.tsp": {
+    "static": {
+      "cost": 317.7642297398473,
+      "time": 212.91448402404785,
+      "status": "OPTIMAL",
+      "gap": 6.820044006857866e-8,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:31:40"
+    },
+    "CG-NC": {
+      "cost": 772.6560624033953,
+      "time": 6.292431592941284,
+      "status": "CG_REL_ENDED",
+      "gap": 0.5005060696184076,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:34:54"
+    }
+  },
+  "100_kroA_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.01305079460144,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 13:50:50"
+    }
+  },
+  "22_ulysses_6.tsp": {
+    "static": {
+      "cost": 82.6309678494024,
+      "time": 2.8514740467071533,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:24:42"
+    },
+    "CG-NC": {
+      "cost": 138.81085517520467,
+      "time": 3.710113763809204,
+      "status": "CG_REL_ENDED",
+      "gap": 0.24681013705896152,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:32:36"
+    },
+    "cutting_planes": {
+      "cost": 116.52876945505506,
+      "time": 335.0797140598297,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:06:51"
+    },
+    "robust_dual": {
+      "cost": 116.52876945505506,
+      "time": 10.030007123947144,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:40:43"
+    }
+  },
+  "10_ulysses_3.tsp": {
+    "static": {
+      "cost": 54.35482358772117,
+      "time": 0.035856008529663086,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:24:38"
+    },
+    "CG-NC": {
+      "cost": 136.99527629589417,
+      "time": 3.1564950942993164,
+      "status": "OPTIMAL",
+      "gap": 6.223946591198453e-16,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:32:08"
+    },
+    "cutting_planes": {
+      "cost": 136.99527629589417,
+      "time": 4.627346038818359,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 11:59:58"
+    },
+    "cutting_planes_callbacks": {
+      "cost": 136.99527629589417,
+      "time": 1.7638850212097168,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:54:42"
+    },
+    "robust_dual": {
+      "cost": 136.99527629589417,
+      "time": 0.2877049446105957,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:40:30"
+    }
+  },
+  "34_pr_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0390520095825,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:55:47"
+    },
+    "CG-NC": {
+      "cost": 198030.4277218256,
+      "time": 19.930452585220337,
+      "status": "CG_REL_ENDED",
+      "gap": 0.5884294308486627,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:52:44"
+    }
+  },
+  "14_burma_3.tsp": {
+    "static": {
+      "cost": 66.21374551350529,
+      "time": 0.1172029972076416,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:24:38"
+    },
+    "CG-NC": {
+      "cost": 93.3899872599682,
+      "time": 1.4854483604431152,
+      "status": "CG_REL_ENDED",
+      "gap": 0.008126977605243493,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:32:10"
+    },
+    "cutting_planes": {
+      "cost": 93.38998725996821,
+      "time": 0.8439950942993164,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:00:00"
+    },
+    "cutting_planes_callbacks": {
+      "cost": 93.38998725996821,
+      "time": 0.4779670238494873,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:54:43"
+    },
+    "robust_dual": {
+      "cost": 93.38998725996821,
+      "time": 0.1853780746459961,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:40:31"
+    }
+  },
+  "30_eil_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.00725388526917,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:38:35"
+    },
+    "CG-NC": {
+      "cost": 1360.907559536604,
+      "time": 25.423691987991333,
+      "status": "CG_REL_ENDED",
+      "gap": 0.22472678866130041,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:40:03"
+    }
+  },
+  "532_att_3.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.03362703323364,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 14:46:10"
+    }
+  },
+  "532_att_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.06502413749695,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 14:51:15"
+    }
+  },
+  "70_st_3.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0056400299072,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 13:15:49"
+    }
+  },
+  "202_gr_3.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.05180501937866,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 14:00:51"
+    }
+  },
+  "26_eil_3.tsp": {
+    "static": {
+      "cost": 1850.4196829498167,
+      "time": 10.940535068511963,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:24:54"
+    },
+    "CG-NC": {
+      "cost": 2423.7166695764117,
+      "time": 116.46852922439575,
+      "status": "CG_REL_ENDED",
+      "gap": 0.08517490206417164,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:34:34"
+    },
+    "cutting_planes": {
+      "cost": 2297.6295855710846,
+      "time": 515.2988150119781,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:15:44"
+    },
+    "robust_dual": {
+      "cost": 2297.6295855710846,
+      "time": 65.08283019065857,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:41:51"
+    }
+  },
+  "400_rd_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.13000106811523,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 14:41:08"
+    }
+  },
+  "400_rd_3.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0174539089203,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 14:31:01"
+    }
+  },
+  "10_ulysses_6.tsp": {
+    "static": {
+      "cost": 7.221996142226361,
+      "time": 0.049401044845581055,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:24:38"
+    },
+    "CG-NC": {
+      "cost": 55.11939124322688,
+      "time": 0.12026023864746094,
+      "status": "CG_REL_ENDED",
+      "gap": 0.32415520909181333,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:32:08"
+    },
+    "cutting_planes": {
+      "cost": 55.11939124322688,
+      "time": 0.30239009857177734,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 11:59:59"
+    },
+    "cutting_planes_callbacks": {
+      "cost": 55.119389983818735,
+      "time": 0.39820098876953125,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:54:43"
+    },
+    "robust_dual": {
+      "cost": 55.11939124322688,
+      "time": 0.06278014183044434,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:40:30"
+    }
+  },
+  "100_kroA_3.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.01343512535095,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 13:45:50"
+    }
+  },
+  "22_ulysses_9.tsp": {
+    "static": {
+      "cost": 26.21722561715073,
+      "time": 0.7617838382720947,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:24:43"
+    },
+    "CG-NC": {
+      "cost": 64.97359245269088,
+      "time": 1.6279637813568115,
+      "status": "CG_REL_ENDED",
+      "gap": 0.006645272195606661,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:32:38"
+    },
+    "cutting_planes": {
+      "cost": 64.9735924526909,
+      "time": 17.225558042526245,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:07:08"
+    },
+    "robust_dual": {
+      "cost": 64.9735924526909,
+      "time": 2.9106979370117188,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:40:46"
+    }
+  },
+  "44_lin_3.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.015841960907,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 12:30:48"
+    },
+    "CG-NC": {
+      "cost": 252851.24183256683,
+      "time": 0.03087639808654785,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:28"
+    }
+  },
+  "80_gr_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.01340889930725,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 13:40:50"
+    }
+  },
+  "52_berlin_3.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0173370838165,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 13:00:49"
+    },
+    "CG-NC": {
+      "cost": 239071.63342471595,
+      "time": 0.05201578140258789,
+      "status": "OPTIMAL",
+      "gap": -1.2173686204347846e-16,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:28"
+    }
+  },
+  "202_gr_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 301.0744881629944,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 14:05:52"
+    }
+  },
+  "44_lin_9.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0092351436615,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 12:40:48"
+    },
+    "CG-NC": {
+      "cost": 71091.7286782219,
+      "time": 0.03291678428649902,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:28"
+    }
+  },
+  "26_eil_6.tsp": {
+    "static": {
+      "cost": 608.7184756899014,
+      "time": 193.06050419807434,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:28:07"
+    },
+    "CG-NC": {
+      "cost": 1015.8601313012331,
+      "time": 13.577458381652832,
+      "status": "CG_REL_ENDED",
+      "gap": 0.25650605471139276,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:34:48"
+    },
+    "cutting_planes": {
+      "cost": 662.615583436002,
+      "time": 703.0151381492615,
+      "status": "TIME_LIMIT",
+      "gap": 0.0,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:27:27"
+    },
+    "robust_dual": {
+      "cost": Infinity,
+      "time": 600.0089929103851,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 12:51:51"
+    }
+  },
+  "34_pr_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.0139670372009,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 11:50:47"
+    },
+    "CG-NC": {
+      "cost": 314058.52583083964,
+      "time": 126.05486702919006,
+      "status": "CG_REL_ENDED",
+      "gap": 0.36440770068735834,
+      "commit-id": "df8b76c",
+      "date": "2026-02-04 13:52:24"
+    }
+  },
+  "80_gr_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.16353487968445,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 13:35:49"
+    }
+  },
+  "70_st_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.01319003105164,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 13:20:49"
+    }
+  },
+  "44_lin_6.tsp": {
+    "static": {
+      "cost": Infinity,
+      "time": 300.1951551437378,
+      "status": "TIME_LIMIT",
+      "gap": Infinity,
+      "commit-id": "df8b76c",
+      "date": "2026-02-03 12:35:48"
+    },
+    "CG-NC": {
+      "cost": 132561.78251804988,
+      "time": 0.01851630210876465,
+      "status": "OPTIMAL",
+      "gap": 0.0,
+      "commit-id": "b05d1ff",
+      "date": "2026-01-21 11:34:28"
+    }
+  }
+}

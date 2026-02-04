@@ -9,7 +9,8 @@ function CG_solver_non_compact(
     find_integer_sol :: Bool = true,
     timelimit :: Int = 600,
     itermax :: Int = 1000,
-    eps = 1e-6
+    eps = 1e-6,
+    verbose = false
 )
     total_master_time = 0.0
     total_pricing_time = 0.0
@@ -29,10 +30,13 @@ function CG_solver_non_compact(
     rdist = master_model[:rdist]
 
     lower_bound_obj = 0.
+    last_rc = -Inf
     iter = 0
     stop = false
     while !stop && iter < itermax && total_master_time + total_pricing_time < timelimit
-        println("Starting iteration $iter, solving master problem")
+        if verbose
+            println("Starting iteration $iter, solving master problem")
+        end
         # master_model step
         T0master = time()
         optimize!(master_model)
@@ -42,7 +46,9 @@ function CG_solver_non_compact(
 
         total_master_time += time() - T0master
 
-        println("Current master objective is $curr_obj, starting pricing resolution")
+        if verbose
+            println("Current master objective is $curr_obj, starting pricing resolution")
+        end
         # Pricing step
         T0pricing = time()
 
@@ -52,7 +58,9 @@ function CG_solver_non_compact(
 
         rc, clust = find_best_candidate_quadratic(instance, pricing_model, lambda, mu)
 
-        println("Found a candidate with reduced cost of $(rc - theta)")
+        if verbose
+            println("Found a candidate with reduced cost of $(rc - theta)")
+        end
         # Note that the pricing is implemented as a min problem (to go with the master_model which is also a min problem)
         # So the reduced cost differs a little from the problem described in the Overleaf
         if rc - theta < -eps
@@ -62,7 +70,8 @@ function CG_solver_non_compact(
             stop = true
         end
 
-        lower_bound_obj = curr_obj + (rc - theta) 
+        lower_bound_obj = curr_obj + instance.K * (rc - theta) 
+        last_rc = (rc - theta)
         total_pricing_time += time() - T0pricing
 
         iter += 1
@@ -74,7 +83,7 @@ function CG_solver_non_compact(
 
     # Solve with integer constraint using only these columns (No Branch & Price)
     println("------------")
-    println("Relaxation solved, solving with integer constraint")
+    println("Relaxation solved after $iter iterations, last reduced cost  is $last_rc, solving with integer constraint")
     T0integer = time()
 
     set_binary.(z)
@@ -86,12 +95,16 @@ function CG_solver_non_compact(
     integer_obj = objective_value(master_model)
 
     gap_estimation = (integer_obj - lower_bound_obj) / lower_bound_obj
-    status = gap_estimation < eps ? string(MOI.OPTIMAL) : "UNKNOWN"
+    status = gap_estimation < eps ? string(MOI.OPTIMAL) : "CG_REL_ENDED"
     z_val = value.(z)
 
     solution = [clust for (p, clust) in enumerate(available_partitions) if z_val[p] > 1 - eps]
 
     total_integer_time = time() - T0integer
+
+
+    feas = check_feasability(instance, solution, robust = true)
+    println("Feasibility : $feas")
 
     println("Integer solution has a value of $integer_obj, estimated gap (to relaxation) is $gap_estimation")
     println("------ Time Info ------")

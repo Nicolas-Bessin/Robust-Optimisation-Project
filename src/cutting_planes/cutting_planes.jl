@@ -152,6 +152,10 @@ function cutting_planes_method(instance :: Data, timelimit :: Int = 600, eps :: 
     println("Added a total of $cutting_planes_length length related cutting planes")
     println("Added a total of $cutting_planes_weight weight related cutting planes")
 
+
+    feas = check_feasability(instance, partitions, robust = true)
+    println("Feasibility : $feas")
+
     # Time info
     master_percentage = trunc(100 * total_time_master / solving_time, digits = 3)
     separation_percentage = trunc(100 * total_time_separation / solving_time, digits = 3)

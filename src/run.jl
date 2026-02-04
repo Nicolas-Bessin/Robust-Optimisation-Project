@@ -10,7 +10,8 @@ Methods : 1 for static, 2 for cutting planes, 3 for robust via dualization, ...
 function run_all_instances(
     instances_dir :: String,
     timelimit :: Int,
-    methods :: Vector{Int} = [1, 3, 4]
+    methods :: Vector{Int} = [1, 3, 4];
+    stop_at_first_failure :: Bool = true
 )
     instances_name = readdir(instances_dir)
     # The solution.txt file is not an instance
@@ -19,7 +20,8 @@ function run_all_instances(
     run_list_of_instances(
         all_instances,
         timelimit,
-        methods
+        methods,
+        stop_at_first_failure = stop_at_first_failure
     )
 end
 
@@ -29,7 +31,7 @@ Methods : 1 for static, 2 for cutting planes, 3 for robust via dualization, ...
 function run_list_of_instances(
     instances_list :: Vector{String},
     timelimit :: Int64,
-    methods :: Vector{Int} = [1, 3, 4],
+    methods :: Vector{Int} = [1, 3, 4];
     stop_at_first_failure :: Bool = true
 )
     if stop_at_first_failure
@@ -37,6 +39,7 @@ function run_list_of_instances(
     end
 
     OPT = string(MOI.OPTIMAL)
+    CG_ENDED = "CG_REL_ENDED"
     # Sort the instances by increasing size Nvertices (filenames are 'Nvertices_name_Kclust.tsp')
     filesizes = [parse(Int, split(basename(x), "_")[1]) for x in instances_list]
     perm = sortperm(filesizes)
@@ -74,7 +77,7 @@ function run_list_of_instances(
             status = CG_solver_non_compact(instance, timelimit = timelimit)
         end
 
-        if status != OPT && stop_at_first_failure
+        if status ∉ [OPT, CG_ENDED] && stop_at_first_failure
             print("Status is $status, expected $OPT")
             break
         end
@@ -83,4 +86,4 @@ function run_list_of_instances(
     
 end
 
-# run_all_instances("data", 300, [1])
+run_all_instances("data/", 600, [5], stop_at_first_failure = true)

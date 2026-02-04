@@ -110,6 +110,10 @@ function cutting_planes_with_callbacks(instance :: Data, timelimit :: Int = 600,
     y_val = value.(y)
     partitions = rebuild_partition(y_val, instance)
 
+
+    feas = check_feasability(instance, partitions, robust = true)
+    println("Feasibility : $feas")
+    
     println("Partition is $partitions")
     println("Objective value is $(objective_value(model))")
 

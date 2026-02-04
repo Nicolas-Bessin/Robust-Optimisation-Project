@@ -114,6 +114,9 @@ function robustdual_problem(
     println("Partition is $partitions")
     println("With a cost of $cost")
 
+    feas = check_feasability(instance, partitions, robust = true)
+    println("Feasibility : $feas")
+
     sol = SolutionInfo(
         instance.instance_name,
         METHOD,
