@@ -86,4 +86,4 @@ function run_list_of_instances(
     
 end
 
-run_all_instances("data/", 600, [5], stop_at_first_failure = true)
+run_all_instances("data/", 600, [1], stop_at_first_failure = false)

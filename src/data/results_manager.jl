@@ -108,8 +108,8 @@ end
 #########################
 # compile_raw_results(
 #     "results/raw/",
-#     "results/static_5sec.json",
+#     "results/all_10_minutes.json",
 #     [Symbol("date")],
 #     descending = true,
-#     methods_to_compile = ["static"]
+#     methods_to_compile = "all"
 # )
