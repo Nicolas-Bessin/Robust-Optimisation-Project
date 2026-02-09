@@ -50,6 +50,8 @@ function run_list_of_instances(
         println("--------------")
         println("Running instance $filepath")
         instance = parse_file(filepath)
+        plot_instance
+
         if 1 in methods
             println("----- Static -----")
             status = static_problem(instance, timelimit)
@@ -85,14 +87,16 @@ function run_list_of_instances(
     
 end
 
-list_to_run_cg = [
-    "data/26_eil_6.tsp",
-    "data/26_eil_9.tsp",
-    "data/30_eil_3.tsp",
-    "data/30_eil_6.tsp",
-    "data/30_eil_9.tsp", 
-    "data/34_pr_3.tsp",
-    "data/34_pr_6.tsp",
-    "data/34_pr_9.tsp",
-]
-run_list_of_instances(list_to_run_cg, 600, [5], stop_at_first_failure = false)
+# list_to_run_cg = [
+#     "data/26_eil_6.tsp",
+#     "data/26_eil_9.tsp",
+#     "data/30_eil_3.tsp",
+#     "data/30_eil_6.tsp",
+#     "data/30_eil_9.tsp", 
+#     "data/34_pr_3.tsp",
+#     "data/34_pr_6.tsp",
+#     "data/34_pr_9.tsp",
+# ]
+# run_list_of_instances(list_to_run_cg, 600, [5], stop_at_first_failure = false)
+
+# run_all_instances("data/", 600, [1], stop_at_first_failure = false)
