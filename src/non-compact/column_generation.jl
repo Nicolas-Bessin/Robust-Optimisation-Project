@@ -126,9 +126,9 @@ function CG_solver_non_compact(
     return status
 end
 
-data = parse_file("data/52_berlin_6.tsp");
+# data = parse_file("data/52_berlin_6.tsp");
 
-@time sol_info = CG_solver_non_compact(data)
+# @time sol_info = CG_solver_non_compact(data)
 
-check_feasability(data, sol_info.solution)
-compute_robust_cost(data, sol_info.solution)
+# check_feasability(data, sol_info.solution)
+# compute_robust_cost(data, sol_info.solution)

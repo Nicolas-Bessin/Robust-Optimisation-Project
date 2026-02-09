@@ -1,0 +1,179 @@
+% Auto-generated
+\begin{itemize}
+  \item \textbf{Instance:} 10\_ulysses\_3.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: 136.99527629589417
+      \item Time: 0.06363415718078613
+      \item Gap: 0.0
+      \item Solution: [[1, 2, 3, 10], [4, 6, 7, 8], [5, 9]]
+    \end{itemize}
+  \item \textbf{Instance:} 10\_ulysses\_6.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: 55.11939124322688
+      \item Time: 0.06000089645385742
+      \item Gap: 0.0
+      \item Solution: [[6, 9], [5], [2, 3], [7], [10], [1, 4, 8]]
+    \end{itemize}
+  \item \textbf{Instance:} 10\_ulysses\_9.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: 33.29189782877749
+      \item Time: 0.01447296142578125
+      \item Gap: 0.0
+      \item Solution: [[6], [10], [9], [4], [7], [1], [2, 3], [8], [5]]
+    \end{itemize}
+  \item \textbf{Instance:} 14\_burma\_3.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: 93.38998725996821
+      \item Time: 0.18731284141540527
+      \item Gap: 0.0
+      \item Solution: [[1, 8, 9, 10, 11], [2, 12, 13, 14], [3, 4, 5, 6, 7]]
+    \end{itemize}
+  \item \textbf{Instance:} 14\_burma\_6.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: 42.74062354260174
+      \item Time: 0.17052197456359863
+      \item Gap: 0.0
+      \item Solution: [[1, 8, 11], [2, 13], [7], [3, 4, 5], [9, 10], [6, 12, 14]]
+    \end{itemize}
+  \item \textbf{Instance:} 14\_burma\_9.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: 20.762438566071065
+      \item Time: 0.19952797889709473
+      \item Gap: 0.0
+      \item Solution: [[1, 8], [2], [7], [10], [6, 12], [3, 4], [13, 14], [9, 11], [5]]
+    \end{itemize}
+  \item \textbf{Instance:} 22\_ulysses\_3.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: 358.6368286225183
+      \item Time: 1.8745441436767578
+      \item Gap: 0.0
+      \item Solution: [[1, 2, 3, 4, 8, 16, 17, 18], [7, 10, 12, 13, 14, 19, 20, 22], [5, 6, 9, 11, 15, 21]]
+    \end{itemize}
+  \item \textbf{Instance:} 22\_ulysses\_6.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: 116.52876945505506
+      \item Time: 7.648591041564941
+      \item Gap: 0.0
+      \item Solution: [[1, 8, 16, 22], [10, 12, 20, 21], [5, 6, 14, 15], [7, 11], [2, 3, 4, 17, 18], [9, 13, 19]]
+    \end{itemize}
+  \item \textbf{Instance:} 22\_ulysses\_9.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: 64.9735924526909
+      \item Time: 2.176405906677246
+      \item Gap: 0.0
+      \item Solution: [[1, 16, 22], [6, 10], [5, 9], [12, 14, 15], [20, 21], [2, 3, 17], [7, 13], [11, 19], [4, 8, 18]]
+    \end{itemize}
+  \item \textbf{Instance:} 26\_eil\_3.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: 2297.6295855710846
+      \item Time: 56.28470301628113
+      \item Gap: 0.0
+      \item Solution: [[1, 2, 3, 5, 9, 10, 11, 16, 20, 21], [4, 12, 13, 15, 17, 18, 19], [6, 7, 8, 14, 22, 23, 24, 25, 26]]
+    \end{itemize}
+  \item \textbf{Instance:} 26\_eil\_6.tsp
+    \begin{itemize}
+      \item Method: CG-NC
+      \item Cost: 1015.8601313012331
+      \item Time: 12.717041015625
+      \item Gap: 0.25650605471139276
+      \item Solution: [[4, 10, 12, 15, 17], [6, 14, 23, 25], [7, 8, 24, 26], [13, 18, 19], [1, 2, 5, 11, 16], [3, 9, 20, 21, 22]]
+    \end{itemize}
+  \item \textbf{Instance:} 26\_eil\_6.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: Inf
+      \item Time: 600.0072569847107
+      \item Gap: Inf
+      \item Solution: [Int64[]]
+    \end{itemize}
+  \item \textbf{Instance:} 26\_eil\_9.tsp
+    \begin{itemize}
+      \item Method: CG-NC
+      \item Cost: 772.6560624033953
+      \item Time: 5.189327955245972
+      \item Gap: 0.5005060696184076
+      \item Solution: [[18, 13], [19, 24], [5, 17, 15], [4, 10, 12], [1, 3, 22, 26], [6, 14, 25], [7, 8, 23], [9, 20, 21], [2, 11, 16]]
+    \end{itemize}
+  \item \textbf{Instance:} 26\_eil\_9.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: Inf
+      \item Time: 600.0098669528961
+      \item Gap: Inf
+      \item Solution: [Int64[]]
+    \end{itemize}
+  \item \textbf{Instance:} 30\_eil\_3.tsp
+    \begin{itemize}
+      \item Method: CG-NC
+      \item Cost: 3021.110276255874
+      \item Time: 203.8809576034546
+      \item Gap: 0.006355427056133514
+      \item Solution: [[4, 7, 8, 10, 11, 12, 13, 14, 17, 19, 26], [1, 2, 5, 6, 15, 20, 21, 22, 27, 28, 29, 30], [3, 9, 16, 18, 23, 24, 25]]
+    \end{itemize}
+  \item \textbf{Instance:} 30\_eil\_3.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: 3021.110276255874
+      \item Time: 320.30139112472534
+      \item Gap: 0.0
+      \item Solution: [[1, 2, 5, 6, 15, 20, 21, 22, 27, 28, 29, 30], [4, 7, 8, 10, 11, 12, 13, 14, 17, 19, 26], [3, 9, 16, 18, 23, 24, 25]]
+    \end{itemize}
+  \item \textbf{Instance:} 30\_eil\_6.tsp
+    \begin{itemize}
+      \item Method: CG-NC
+      \item Cost: 1360.907559536604
+      \item Time: 23.08368706703186
+      \item Gap: 0.22472678866130041
+      \item Solution: [[2, 5, 21, 22, 28, 29], [9, 10, 11, 14], [3, 7, 23, 25], [4, 6, 12, 17, 26, 30], [8, 13, 15, 19, 20, 27], [1, 16, 18, 24]]
+    \end{itemize}
+  \item \textbf{Instance:} 30\_eil\_6.tsp
+    \begin{itemize}
+      \item Method: robust\_dual
+      \item Cost: Inf
+      \item Time: 600.0070669651031
+      \item Gap: Inf
+      \item Solution: [Int64[]]
+    \end{itemize}
+  \item \textbf{Instance:} 30\_eil\_9.tsp
+    \begin{itemize}
+      \item Method: CG-NC
+      \item Cost: 713.971761421444
+      \item Time: 6.4169557094573975
+      \item Gap: 0.09071368486652343
+      \item Solution: [[22, 23, 24], [3, 17, 26], [7, 11, 14, 19], [1, 2, 21, 28], [4, 6, 27, 30], [16, 18], [5, 15, 20, 29], [9, 10, 25], [8, 12, 13]]
+    \end{itemize}
+  \item \textbf{Instance:} 34\_pr\_3.tsp
+    \begin{itemize}
+      \item Method: CG-NC
+      \item Cost: 1.1472591721102013e6
+      \item Time: 601.1148326396942
+      \item Gap: 0.9951453843063541
+      \item Solution: [[23, 32, 2, 9, 25, 19], [21, 31, 1, 17, 22, 26, 30, 34], [20, 14, 3, 11, 29, 12, 18, 27, 13, 24, 28, 4, 5, 8, 16, 33, 6, 7, 10, 15]]
+    \end{itemize}
+  \item \textbf{Instance:} 34\_pr\_6.tsp
+    \begin{itemize}
+      \item Method: CG-NC
+      \item Cost: 314058.52583083964
+      \item Time: 99.4175136089325
+      \item Gap: 0.36440770068735834
+      \item Solution: [[11, 12, 13, 14, 15, 16, 17], [21, 22, 23, 24], [25, 26, 27, 28, 29], [1, 2, 3, 4, 5, 8], [18, 19, 30, 32, 33, 34], [6, 7, 8, 9, 10, 20, 31]]
+    \end{itemize}
+  \item \textbf{Instance:} 34\_pr\_9.tsp
+    \begin{itemize}
+      \item Method: CG-NC
+      \item Cost: 198030.4277218256
+      \item Time: 16.553050756454468
+      \item Gap: 0.5884294308486627
+      \item Solution: [[1, 2, 5], [21, 22, 24], [23, 25], [3, 6, 7, 8, 20], [28, 29, 32, 33, 34], [11, 12, 17, 18], [9, 13, 14, 15, 16], [26, 27, 30], [4, 10, 19, 31]]
+    \end{itemize}
+\end{itemize}
